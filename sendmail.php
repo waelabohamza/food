@@ -1,5 +1,11 @@
 <?php
-if ($_SERVER['REQUEST_METHOD']){
+
+if ($_SERVER['REQUEST_METHOD'] == "POST"){
+
+  $emailtarget = filterSan($_POST['email'] , "email") ;
+  $title = filterSan($_POST['title']) ;
+  $content = filterSan($_POST['content']) ;
+
   // Import PHPMailer classes into the global namespace
   // These must be at the top of your script, not inside a function
   use PHPMailer\PHPMailer\PHPMailer;
@@ -29,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD']){
       //Recipients
       $mail->setFrom('resetpassword@talabpay.com', 'talabpay');
       // $mail->addAddress('joe@example.net', 'Joe User');     // Add a recipient
-      $mail->addAddress('waeleagle456@gmail.com');               // Name is optional
+      $mail->addAddress($emailtarget);               // Name is optional
       // $mail->addReplyTo('info@example.com', 'Information');
       // $mail->addCC('cc@example.com');
       // $mail->addBCC('bcc@example.com');
@@ -38,8 +44,8 @@ if ($_SERVER['REQUEST_METHOD']){
       // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
       // Content
       $mail->isHTML(true);                                  // Set email format to HTML
-      $mail->Subject = 'Here is the subject';
-      $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+      $mail->Subject =   $title ;
+      $mail->Body    =   $content;
       // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
       $mail->send();
       echo 'Message has been sent';
