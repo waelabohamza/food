@@ -10,7 +10,7 @@ use PHPMailer\PHPMailer\SMTP;
   // use PHPMailer\PHPMailer\Exception;
   // Load Composer's autoloader
   require 'mail/autoload.php';
-  include "connect.php" ;
+  include "connect.php" ; 
   // Instantiation and passing `true` enables exceptions
   $mail = new PHPMailer(true);
   try {
@@ -37,7 +37,6 @@ use PHPMailer\PHPMailer\SMTP;
       $emailtarget = filterSan($_POST['email'] , "email") ;
       $title = filterSan($_POST['title']) ;
       $content = filterSan($_POST['content']) ;
-
       $mail->addAddress($emailtarget);               // Name is optional
       // $mail->addReplyTo('info@example.com', 'Information');
       // $mail->addCC('cc@example.com');

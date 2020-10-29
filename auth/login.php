@@ -1,9 +1,6 @@
  <?php
-
 include "../connect.php";
-
 if ($_SERVER['REQUEST_METHOD'] == "POST"){
-
   $and = null ;
   $email    = filter_var( $_POST['email'] , FILTER_SANITIZE_EMAIL ) ;
   $password =  $_POST['password'] ;
@@ -11,14 +8,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
     $role = $_POST['role']  ;
     $and =  "AND role = '$role' " ;
   }
-
   $stmt = $con->prepare("SELECT * FROM users WHERE email = ? AND password = ? $and") ;
   $stmt->execute(array($email , $password));
-
   $user = $stmt->fetch() ;
-
    $row = $stmt->rowcount()  ;
-
    if ($row > 0) {
        $id        = filterSan($user['user_id'] , "number") ;
        $username  = filterSan($user['username']) ;
@@ -29,8 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
        echo json_encode(array('id' => $id , 'username' => $username ,'email' => $email  , 'balance' => $balance   , 'phone' => $phone ,'password' => $password , 'status' => "success"));
    }else {
      echo json_encode (array('status' => "faild" , 'email' => $email  , 'password' => $password) );
- }
-
-
+   }
 }
 ?>
