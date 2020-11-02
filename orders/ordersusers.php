@@ -6,9 +6,10 @@ include "../connect.php" ;
 
     $userid = $_POST['userid'] ;
 
-    $stmt = $con->prepare("SELECT  orders.* , users.*  FROM orders
+    $stmt = $con->prepare("SELECT  orders.* , users.*  , restaurants.* FROM orders
 
-    INNER JOIN users ON users.user_id  =  orders.orders_users
+       INNER JOIN users ON users.user_id  =  orders.orders_users
+       INNER JOIN restaurants ON restaurants.res_id  =  orders.orders_res
 
     WHERE users.user_id = ?
 
