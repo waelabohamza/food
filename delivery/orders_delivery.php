@@ -9,8 +9,8 @@ include "../connect.php" ;
     $userid = $_POST['userid'] ;
     $status = $_POST['status'] ;
     $and = "AND orders_delivery = $userid AND  orders_status = $status   " ;
-    if ( $_POST['status'] == 0 ) {
-      $and = " AND  orders_status = $status AND orders_delivery = 0  " ; 
+    if ( $_POST['status'] == 1 ){
+      $and = " AND  orders_status = $status AND orders_delivery = 0  " ;
     }
 
     $stmt = $con->prepare("SELECT DISTINCT  orders_id , orders.*  , users.* FROM orders

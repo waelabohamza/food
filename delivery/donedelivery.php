@@ -3,7 +3,7 @@ include "../connect.php" ;
 
 $orderid = $_POST['orderid'] ;
 
-$stmt = $con->prepare("UPDATE orders SET orders_status = 2 WHERE orders_id = ?") ;
+$stmt = $con->prepare("UPDATE orders SET orders_status = 3 WHERE orders_id = ?") ;
 
 $stmt->execute(array($orderid)) ;
 
