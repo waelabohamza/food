@@ -1,6 +1,6 @@
 <?php
    include "../connect.php" ;
-   $stmt = $con->prepare("SELECT   restaurants.* , orders.* FROM restaurants
+   $stmt = $con->prepare("SELECT DISTINCT  restaurants.* FROM restaurants
                           INNER JOIN   orders ON orders.orders_res = restaurants.res_id
                           ORDER BY orders.orders_res DESC
                           LIMIT 5

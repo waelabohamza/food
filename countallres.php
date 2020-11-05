@@ -7,6 +7,8 @@
     WHERE item_res = $resid) as items    ,
     (SELECT DISTINCT  COUNT(orders_id)    FROM orders
        where  orders.orders_res =   $resid ) as orders ,
+       (SELECT    COUNT(users.user_id)     FROM users
+    WHERE  users.delivery_res = $resid) as delivery  ,
     (SELECT restaurants.res_balance FROM restaurants WHERE restaurants.res_id = $resid) as balance
     "  ;
  $stmt = $con->prepare($sql) ;
