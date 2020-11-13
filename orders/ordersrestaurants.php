@@ -6,12 +6,12 @@ include "../connect.php" ;
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $resid = $_POST['resid'] ;
- 
+
 
 
     $stmt = $con->prepare("SELECT DISTINCT  orders_id , orders.*  , users.* FROM orders
     INNER JOIN users ON users.user_id = orders.orders_users
-    WHERE orders_res = ?
+    WHERE orders_res = ? AND orders_status = 0 
      ") ;
     $stmt->execute(array( $resid )) ;
 
