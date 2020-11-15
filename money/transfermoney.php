@@ -8,8 +8,8 @@ $stmt->execute( array( $phone)) ;
 $count = $stmt->rowCount() ;
 if ($count > 0 ) {
  echo json_encode(array("status" => "success" , "token" => $token))  ;
- $title = "TalabGoFoodFoodDelivery" ;
- $message = "تم تحويل رصيد دينار" . $units . "  من قبل Talab Go " ;
+ $title = "TalabGoFoodDelivery" ;
+ $message = "تم تحويل رصيد " . $units . " دينار من قبل TalabPay " ;
  sendGCM($title , $message ,$token, "trabsfermoney" , "home");
 }else {
   echo json_encode(array("status" => "faild"))  ;
