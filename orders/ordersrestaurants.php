@@ -9,9 +9,10 @@ include "../connect.php" ;
 
 
 
-    $stmt = $con->prepare("SELECT DISTINCT  orders_id , orders.*  , users.* FROM orders
+    $stmt = $con->prepare("SELECT DISTINCT  orders_id , orders.*  , users.* , restaurants.* FROM orders
     INNER JOIN users ON users.user_id = orders.orders_users
-    WHERE orders_res = ? AND orders_status = 0 
+    INNER JOIN restaurants ON restaurants.res_id = orders.orders_res
+    WHERE orders_res = ? AND orders_status = 0
      ") ;
     $stmt->execute(array( $resid )) ;
 

@@ -17,9 +17,9 @@ if ($count > 0 ){
 
    $title       =   "TalabGoFoodDelivery"  ;
    $message     =   "تم استلام الطلبية من قبل عامل التوصيل والطلبية الان على الطريق " ;
-   sendGCM( $title , $message ,  $tokenuser , "id", "orders")  ;
+   sendGCM( $title , $message ,  $tokenuser , "id", "orderswait")  ;
    $title       =   "TalabGoRestaurants"  ;
-   $message     =   "تم استلام الطلبية من قبل عامل التوصيل والطلبية الان على الطريق " ;
+   $message     =  "تم استلام الطلبية رقم"   . $ordersid  . "من قبل عامل التوصيل والطلبية الان على الطريق ";
    sendGCM( $title , $message ,  $tokenres , "id", "orders")  ;
 
    // من اجل تحديث بيانات كل عامل توصيل
@@ -34,8 +34,8 @@ if ($count > 0 ){
    foreach ( $delivers as $delivery) {
              $token = $delivery['user_token'] ;
              $title = "TalabGoDelivery" ;
-             $message =  "تم استلام الطلبية من قبل عامل توصيل اخر " ;
-             sendGCM( $title , $message ,  $token , "id", "orders")  ;
+             $message =  "تم استلام الطلبية رقم  "  . $ordersid . " من قبل عامل توصيل اخر  " ;
+             sendGCM( $title , $message ,  $token , "id", "home")  ;
    //
     }
 

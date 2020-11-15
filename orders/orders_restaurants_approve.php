@@ -25,12 +25,14 @@ if ($count > 0 ) {
            $token = $delivery['user_token'] ;
            if ($delivery['role'] == 0 ) {
              $title = "TalabGoFoodDelivery" ;
-             $message = "الطلبية قيد التوصيل" ;
+             $message = "تم الموافقة على طلبك من المطعم والطلبية الان قيد التوصيل" ;
+             sendGCM($title , $message ,$token, $resorders , "orderswait");
            }if ($delivery['role'] == 3 ) {
              $title = "TalabGoDelivery" ;
              $message = "يوجد طلبية بانتظار الموافقة" ;
+             sendGCM($title , $message ,$token, $resorders , "home");
+
            }
-           sendGCM($title , $message ,$token, $resorders , "orders");
    }
 }else {
    echo json_encode( array('status' => 'faild'));

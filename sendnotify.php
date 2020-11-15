@@ -1,9 +1,9 @@
 <?php
+
 include "connect.php" ;
-
-// $idtocken = "d2nRY2FhTfq7QdSOgyRb0c:APA91bGebzl9MIlc0IhO5Pm9lsAcQWYdchYGuhjdpzUb4fI4Av6Ug5LOaKSaLhSjLc4yPNY3XxqTiUele2LCfF9RhTKx2JLw3J_tneYj_6ypW9eWdTM4wfrjuzIuhL2v8quSSpYu-Q33" ;
-// sendGCM( " تجربة " , "يوجد طلبية بانتظار الموافقة", $idtocken, "id", "orders") ;
-
-
+$idtocken = "ds5KjEqxRAi-mjN4yo9FHM:APA91bH7kUgN2-7sx0hZTu-vI6Yk2Dyj2BrkLVWMq3Wj4nqQikl7i89z3QdMJALZMNkuXOurTbKeCEjKBfHfCUjz3FZ2uDJ5FN_9eXKBQpl89OvQL5k6T-VwI02r-nFQtvVLRzu9m7Q7" ;
+$title = "TalabGoDelivery" ;
+$message = "Test Test Test Test " ;
+sendGCM( $title , $message ,  $idtocken, "id", "ordersdonedelivery") ;
 
 ?>

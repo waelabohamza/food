@@ -114,7 +114,7 @@ function sendGCM($title  , $message, $fcm_id , $p_id, $p_name) {
 
     $headers = array (
            // 'Authorization: key=' . "AIzaSyBUuLepXI4xjIuWBO78hagHX9ntj9j_mU4",
-		    'Authorization: key=' . "AAAAdAiFWRg:APA91bGs0oeebTDGTwyG4kQpyoB9sPntsAK4R8LgI7n_r5pW8BcMvU_tqnbLEve8gct9-A53kNABSBxkkoCMZAYbRe21nLgR-FShHHyXc-7DGZkIlhf_0y_5rHRrCmAjUX332yUEGKmk",
+		    'Authorization: key=' . "AAAAgSssFmo:APA91bGgHJgpG-9wuEkNF9lUcyzs7-a1Juc76yXuZ_i6RXmClyDVBcCMNQg790naVCcfoTGZDFfKHjb0wliQAydwlqlL43upNCtohs45kXgv-udqVp339tlgwsNXdJIoMLrIkXCjWdU7",
             'Content-Type: application/json'
     );
 

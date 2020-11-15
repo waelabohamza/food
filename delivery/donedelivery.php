@@ -13,15 +13,14 @@ $stmt->execute(array($orderid)) ;
 $count = $stmt->rowCount() ;
 
 if ($count > 0 ) {
-
   echo json_encode(array("status" => "success" , "tokenuser" => $tokenuser)) ;
 
   $title       =   "TalabGoFoodDelivery"  ;
   $message     =   "تم استلام الطلبية بنجاح" ;
-  sendGCM( $title , $message ,  $tokenuser , "id", "orders")  ;
+  sendGCM( $title , $message ,  $tokenuser , "id", "ordersdone")  ;
 
   $title       =   "TalabGoRestaurants"  ;
-  $message     =   "تم توصيل الطلبية بنجاح" ;
+  $message     =   "تم توصيل الطلبية رقم "  . $orderid . " بنجاح  " ;
   sendGCM( $title , $message ,  $tokenres , "id", "orders")  ;
 
 
