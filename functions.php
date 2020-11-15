@@ -17,6 +17,19 @@ function getToken($idpar , $type){
   return $id  ;
 
 }
+function getTokenByPhone($phone){
+
+  global $con ;
+
+  $stmt = $con->prepare("SELECT user_token FROM  `users`  WHERE user_phone = ? ") ;
+
+  $stmt->execute(array($phone)) ;
+
+  $mytoken  = $stmt->fetchColumn() ;
+
+  return $mytoken  ;
+
+}
 
 function getThing (  $table , $where , $value , $and = NULL ) {
 
