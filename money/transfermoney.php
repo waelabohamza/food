@@ -9,7 +9,7 @@ $count = $stmt->rowCount() ;
 if ($count > 0 ) {
  echo json_encode(array("status" => "success" , "token" => $token))  ;
  $title = "TalabGoFoodFoodDelivery" ;
- $message = "تم تحويل " . $units . "  من قبل Talab Go " ;
+ $message = "تم تحويل رصيد دينار" . $units . "  من قبل Talab Go " ;
  sendGCM($title , $message ,$token, "trabsfermoney" , "home");
 }else {
   echo json_encode(array("status" => "faild"))  ;

@@ -14,7 +14,7 @@ if ($count > 0 ) {
   $stmt2->execute(array($userid)) ;
  echo json_encode(array("status" => "success" , "tokensend" => $token))  ;
  $title = "TalabGoFoodFoodDelivery" ;
- $message = "تم تحويل "  . $units . " من قبل "   . $username  .  " اليك " ;
+ $message = "تم تحويل رصيد"  . $units . " دينار من قبل  "   . $username  .  " اليك " ;
  sendGCM($title , $message ,$token, "trabsfermoney" , "home");
 
 }else {
