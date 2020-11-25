@@ -1,12 +1,11 @@
 <?php
-
  
 
   include "../connect.php" ;
 
 
 
-   $stmt = $con->prepare("SELECT   * FROM `categories` ");
+   $stmt = $con->prepare("SELECT   * FROM `cattaxi` ");
 
    $stmt->execute();
 

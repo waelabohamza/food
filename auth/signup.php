@@ -12,6 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
 
   $phone   =  filterSan($_POST['phone'] , "number") ;
 
+
+
   // check if user excist
 
   $stmtcheck = $con->prepare("SELECT * FROM users WHERE email = ? OR user_phone = ? ");
@@ -21,16 +23,32 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
     echo json_encode(array('status' => "email OR phone already found"));
   }else {
     // if user not exist =>  not rigister => start register
-    $stmt   = $con->prepare("INSERT INTO users(`username` , `email` , `password`,`user_phone`, `user_image`)
-                             VALUES           (? , ? , ? , ? , ?)") ;
 
-    $stmt->execute(array($username , $email , $password  , $phone , $imagename)) ;
+    if (isset($_POST['role'])) {
 
-    $row = $stmt->rowcount() ;
+      $role = $_POST['role'] ;
+
+      $stmt   = $con->prepare("INSERT INTO users(`username` , `email` , `password`,`user_phone`, `user_image` , `role`)
+                               VALUES           (? , ? , ? , ? , ? , ?)") ;
+
+      $stmt->execute(array($username , $email , $password  , $phone , $imagename , $role)) ;
+
+      $row = $stmt->rowcount() ;
+
+    }else {
+      $stmt   = $con->prepare("INSERT INTO users(`username` , `email` , `password`,`user_phone`, `user_image`)
+                               VALUES           (? , ? , ? , ? , ?)") ;
+
+      $stmt->execute(array($username , $email , $password  , $phone , $imagename)) ;
+
+      $row = $stmt->rowcount() ;
+    }
+
+
 
     if ($row > 0) {
       // echo "success" ;
-     move_uploaded_file($_FILES["file"]["tmp_name"], "../upload/users/". $imagename );
+      move_uploaded_file($_FILES["file"]["tmp_name"], "../upload/users/". $imagename );
       echo json_encode(array('username' => $username ,'email' => $email ,'password' => $password , 'status' => "success"));
     }
 

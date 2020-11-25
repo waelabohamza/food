@@ -144,6 +144,22 @@ function sendGCM($title  , $message, $fcm_id , $p_id, $p_name) {
 }
 
 
+function getIdByThing($idtable , $table , $thing , $value) {
+
+
+          global $con  ;
+
+          $stmt = $con->prepare("SELECT $idtable FROM $table where $thing = ? ") ;
+
+          $stmt->execute(array($value)) ;
+
+          $id  = $stmt->fetchColumn() ;
+
+          return $id  ;
+
+
+}
+
 
 
 ?>

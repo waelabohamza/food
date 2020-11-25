@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
          $mail->Host       = 'mail.talabpay.com';                    // Set the SMTP server to send through
          $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
          $mail->Username   = 'resetpassword@talabpay.com';                     // SMTP username
-         $mail->Password   = '2_f12*5h(Z6Z';                               // SMTP password
+         $mail->Password   = 'WonJd1ZeR{!i';                               // SMTP password
          $mail->SMTPSecure = "tls";         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
          $mail->Port       = 587;
          $mail->CharSet = 'UTF-8';

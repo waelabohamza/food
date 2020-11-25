@@ -1,0 +1,24 @@
+// ============================================ role ==================================================//
+
+role = 0 // user
+role = 1 // super admin
+role = 2 // admin
+role = 3 // delivery
+role = 4 // taxi
+role = 5 // employees restaurants = 0   // there user orders and he wait approve restaurants
+
+//
+
+orders status = 0   // there user orders and he wait approve restaurants
+orders status = 1   // restaurants approve and now wait approve delivery
+orders status = 2   // delivery approve and now on the way
+orders status = 3   // done delivery
+orders status = 5   // deleted orders
+
+// Table business
+1 - login signup
+2 - order from food delivery
+3 - map search area
+4 - polyline
+//
+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

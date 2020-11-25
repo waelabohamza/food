@@ -10,7 +10,7 @@ use PHPMailer\PHPMailer\SMTP;
   // use PHPMailer\PHPMailer\Exception;
   // Load Composer's autoloader
   require 'mail/autoload.php';
-  include "connect.php" ; 
+  include "connect.php" ;
   // Instantiation and passing `true` enables exceptions
   $mail = new PHPMailer(true);
   try {
@@ -20,7 +20,7 @@ use PHPMailer\PHPMailer\SMTP;
       $mail->Host       = 'mail.talabpay.com';                    // Set the SMTP server to send through
       $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
       $mail->Username   = 'resetpassword@talabpay.com';                     // SMTP username
-      $mail->Password   = '2_f12*5h(Z6Z';                               // SMTP password
+      $mail->Password   = 'WonJd1ZeR{!i';                               // SMTP password
       $mail->SMTPSecure = "tls";         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
       $mail->Port       = 587;
       $mail->CharSet = 'UTF-8';
