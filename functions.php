@@ -1,5 +1,14 @@
 <?php
 
+function checkAuthenticate() {
+  if ($_SERVER['PHP_AUTH_USER'] != "TalabGoUser@58421710942258459" ||  $_SERVER['PHP_AUTH_PW'] != "TalabGoPassword@58421710942258459") {
+    header('WWW-Authenticate: Basic realm="My Realm"');
+    header('HTTP/1.0 401 Unauthorized');
+    echo 'Page Not Found';
+    exit;
+  }
+}
+
 function getToken($idpar , $type){
 
   global $con ;

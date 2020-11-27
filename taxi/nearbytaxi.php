@@ -6,7 +6,7 @@
   $long =   "36.306316"   ;
 
 
-   $stmt = $con->prepare("SELECT  users.username  , users.user_phone  , taxi_model , taxi_image , taxi_price  , 
+   $stmt = $con->prepare("SELECT    users.username  , users.user_phone  , taxi_model , taxi_image , taxi_price, taxi_mincharge  , taxi_id , taxi_user , 
                 (ACOS(COS(RADIANS( $lat  ))
               * COS( RADIANS( taxi.taxi_lat ) )
               * COS( RADIANS( taxi.taxi_long ) - RADIANS( $long) )
@@ -18,7 +18,7 @@
 
   FROM taxi
   INNER JOIN users ON users.user_id  = taxi.taxi_user
-  HAVING distance_in_km <= 5
+  HAVING distance_in_km <= 20
   ORDER BY distance_in_km ASC
   LIMIT 14   ");
 

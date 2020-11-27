@@ -17,6 +17,12 @@ try {
  }
 
 
+ checkAuthenticate () ;
+
+
+
+
+
 
 
 ?>
