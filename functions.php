@@ -6,6 +6,7 @@ function checkAuthenticate() {
   //   header('HTTP/1.0 401 Unauthorized');
   //   echo 'Page Not Found';
   //   exit;
+  
   // }
 }
 
