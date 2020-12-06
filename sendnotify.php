@@ -1,12 +1,11 @@
 <?php
 
 include "connect.php" ;
-for ($i = 0 ; $i < 10  ; $i++ ) {
-  $idtocken = "fbMUx_pNReeDPnG-Kk9x9y:APA91bHoan8Hi-86M9BilNPapwF9oXZZhZOznHG7iwfJEbtuwKhfQruANHQa9cYATwIZ5f-Fy7MoO9XJ_9wP2NH4BkTspLuKyj7LkqXvidQ02raySKIgarYtFqpKbyb2OWoRroAJ53cS" ;
-  $title = "حنان" ;
-  $message = "تصبح على خير احلام سعيدة " ;
-  sendGCM( $title , $message ,  $idtocken, "id", "ordersdonedelivery") ;
-}
+   $idtoken = "d08H_qbsRTetsyMvMAuZUt:APA91bEOVbRZAzUdnxHcHzUOhnR4ujcLvl5AX_BMEamfGguydOThaGH90J5xHV0JcGC9BBNNezFkrESGV4_z97aOaGivEhE8EmBwugrmj1J3lRS6NzHway9r2PR_DBZ1NVAQYm1eav3_" ;
+   $title= "php test" ;
+   $message = "test test test test test" ;  
+  sendGCM( $title , $message ,  $idtoken, "id", "orderswait") ;
+
 
 
 ?>

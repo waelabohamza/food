@@ -26,7 +26,7 @@ $stmt->execute(array(
   ":des"     => $description       ,
   ":lat"     => $lat           ,
   ":long"    => $long          ,
-  ":ad"      =>  $address     ,
+  ":ad"      => $address     ,
   ":dat"     => $timenow       ,
   ":tot"     => $totalprice    ,
   ":st"      => "0"

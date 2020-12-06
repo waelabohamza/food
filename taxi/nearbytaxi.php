@@ -2,11 +2,17 @@
 
   include "../connect.php" ;
 
-  $lat  =   "33.637489"   ;
-  $long =   "36.306316"   ;
+  $lat  =   $_POST['lat'] ;
+  $long =   $_POST['long']  ;
 
-
-   $stmt = $con->prepare("SELECT    users.username  , users.user_phone  , taxi_model , taxi_image , taxi_price, taxi_mincharge  , taxi_id , taxi_user , 
+   $stmt = $con->prepare("SELECT    taxi_username ,
+                                    taxi_phone ,
+                                    taxi_model ,
+                                    taxi_image ,
+                                    taxi_price,
+                                    taxi_mincharge  ,
+                                    taxi_id ,
+                                    taxi_token , 
                 (ACOS(COS(RADIANS( $lat  ))
               * COS( RADIANS( taxi.taxi_lat ) )
               * COS( RADIANS( taxi.taxi_long ) - RADIANS( $long) )
@@ -15,12 +21,12 @@
           )
         * 6371
         ) AS distance_in_km
-
   FROM taxi
-  INNER JOIN users ON users.user_id  = taxi.taxi_user
-  HAVING distance_in_km <= 20
+  WHERE taxi_active = 1
+  HAVING distance_in_km <= 200
   ORDER BY distance_in_km ASC
-  LIMIT 14   ");
+  LIMIT 14
+   ");
 
    $stmt->execute();
 
@@ -33,8 +39,5 @@
    }else {
      echo json_encode(array(0 => "faild")) ;
    }
-
-
-
 
 ?>

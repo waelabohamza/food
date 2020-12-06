@@ -5,9 +5,9 @@
 
   if ( isset($_POST['userid']) ) {
      $userid = $_POST['userid'] ;
-     $where  = "WHERE  `user_id` =  $userid " ;
+     $where  = "WHERE  `user_id` =  $userid  AND role != 1 " ;
   }else {
-    $where  = " WHERE user_id != 1 " ;
+    $where  = " WHERE role != 1 " ;
   }
 
    $stmt = $con->prepare("SELECT   * FROM `users`  $where        ");

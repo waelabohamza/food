@@ -1,12 +1,12 @@
 <?php
 
 function checkAuthenticate() {
-  if ($_SERVER['PHP_AUTH_USER'] != "TalabGoUser@58421710942258459" ||  $_SERVER['PHP_AUTH_PW'] != "TalabGoPassword@58421710942258459") {
-    header('WWW-Authenticate: Basic realm="My Realm"');
-    header('HTTP/1.0 401 Unauthorized');
-    echo 'Page Not Found';
-    exit;
-  }
+  // if ($_SERVER['PHP_AUTH_USER'] != "TalabGoUser@58421710942258459" ||  $_SERVER['PHP_AUTH_PW'] != "TalabGoPassword@58421710942258459") {
+  //   header('WWW-Authenticate: Basic realm="My Realm"');
+  //   header('HTTP/1.0 401 Unauthorized');
+  //   echo 'Page Not Found';
+  //   exit;
+  // }
 }
 
 function getToken($idpar , $type){
@@ -20,6 +20,7 @@ function getToken($idpar , $type){
   }
 
   $stmt->execute(array($idpar)) ;
+
 
   $id  = $stmt->fetchColumn() ;
 
@@ -37,6 +38,21 @@ function getTokenByPhone($phone){
   $mytoken  = $stmt->fetchColumn() ;
 
   return $mytoken  ;
+
+}
+
+function getTokenAllAdmin($message , $key  , $value) {
+
+    global $con ;
+    $stmt = $con->prepare("SELECT `user_token`  , `role` FROM `users` WHERE  `role` =  1  ") ;
+    $stmt->execute() ;
+    $admins = $stmt->fetchAll(PDO::FETCH_ASSOC) ;
+    foreach ( $admins as $admin) {
+              $token = $admin['user_token'] ;
+              $title = "TalabGoAdmin" ;
+              sendGCM( $title , $message ,  $token , $key , $value)  ;
+    //
+     }
 
 }
 
@@ -105,6 +121,9 @@ function checkThing (  $table , $where , $value , $and = NULL ) {
 
        }
 
+ // ====================================================================================
+ //  SEND NOTEFICATION API
+ //=====================================================================================
 
 function sendGCM($title  , $message, $fcm_id , $p_id, $p_name) {
 	//$message = utf8_decode($message);
@@ -168,6 +187,85 @@ function getIdByThing($idtable , $table , $thing , $value) {
 
 
 }
+
+
+// ====================================================================================
+//    ADD  AND Minus Money  FOR  TAXI AND USER AND RESTUARANTS AND Delivery
+//=====================================================================================
+
+function removeMoneyById($table , $column  ,  $price , $table_id , $id ) {
+ global $con  ;
+ $stmt = $con->prepare("UPDATE $table SET $column = $column - $price WHERE $table_id = ?  ") ;
+ $stmt->execute(array($id)) ;
+ $count = $stmt->rowCount() ;
+ return $count ;
+}
+
+function addMoneyById($table , $column  ,  $price , $table_id , $id) {
+  global $con  ;
+  $stmt = $con->prepare("UPDATE $table SET $column = $column + $price WHERE $table_id = ?  ") ;
+  $stmt->execute(array($id)) ;
+  $count = $stmt->rowCount() ;
+  return $count ;
+}
+
+
+// ====================================================================================
+//    INSERT TOKEN AND DELETE TOKEN FOR  TAXI AND USER AND RESTUARANTS
+//=====================================================================================
+
+function insertTokenRes($resid , $restoken){
+  global $con  ;
+  $sql  = "INSERT INTO `tokenres`(`tokenres_res`, `tokenres_token`) VALUES ( ?  , ? )"  ;
+  $stmt = $con->prepare($sql) ;
+  $stmt->execute(array($resid , $restoken)) ;
+  $count = $stmt->rowCount()   ;
+  return $count ;
+}
+function insertTokenUser($userid , $usertoken){
+  global $con  ;
+  $sql  = "INSERT INTO `tokenusers`(`tokenusers_token`,`tokenusers_user`) VALUES (? , ?)"  ;
+  $stmt = $con->prepare($sql) ;
+  $stmt->execute(array($usertoken , $userid)) ;
+  $count = $stmt->rowCount()   ;
+  return $count ;
+}
+function insertTokenTaxi($taxiid , $taxitoken){
+  global $con  ;
+  $sql  = "INSERT INTO `tokentaxi`( `tokentaxi_token`, `tokentaxi_taxi`) VALUES (? ,  ?)"  ;
+  $stmt = $con->prepare($sql) ;
+  $stmt->execute(array($taxitoken , $taxiid)) ;
+  $count = $stmt->rowCount()   ;
+  return $count ;
+}
+
+
+function deleteTokenRes($resid){
+  global $con  ;
+  $sql  = "DELETE FROM `tokenres` WHERE tokenres_res =  ?"  ;
+  $stmt = $con->prepare($sql) ;
+  $stmt->execute(array($resid)) ;
+  $count = $stmt->rowCount()   ;
+  return $count ;
+}
+function deleteTokenUser($userid){
+  global $con  ;
+  $sql  = "DELETE FROM `tokenusers` WHERE tokenusers_user = ?"  ;
+  $stmt = $con->prepare($sql) ;
+  $stmt->execute(array($userid)) ;
+  $count = $stmt->rowCount()   ;
+  return $count ;
+}
+function deleteTokenTaxi($taxiid){
+  global $con  ;
+  $sql  = "DELETE FROM `tokentaxi` WHERE tokentaxi_taxi =  ? "  ;
+  $stmt = $con->prepare($sql) ;
+  $stmt->execute(array($taxiid)) ;
+  $count = $stmt->rowCount()   ;
+  return $count ;
+}
+
+
 
 
 

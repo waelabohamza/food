@@ -9,11 +9,11 @@ $destlat  =  $_POST['destlat'] ;
 $destlong =  $_POST['destlong'] ;
 $price    =  $_POST['price'] ;
 $distance =  $_POST['distance'] ;
-$driver   =  $_POST['driver'] ;
+$tokentaxi = $_POST['tokentaxi'] ;
+
 
 
 $stmt = $con->prepare('INSERT INTO `orderstaxi`( `orderstaxi_user`,
-                                                  `orderstaxi_driver`,
                                                   `orderstaxi_taxi`,
                                                   `orderstaxi_lat`,
                                                   `orderstaxi_long`,
@@ -22,13 +22,12 @@ $stmt = $con->prepare('INSERT INTO `orderstaxi`( `orderstaxi_user`,
                                                   `orderstaxi_price`,
                                                   `orderstaxi_distancekm`
                                                 )
-                       VALUES (:us , :dr , :tax , :lat , :long , :dlat , :dlong , :pr  , :di )
+                       VALUES (:us   , :tax , :lat , :long , :dlat , :dlong , :pr  , :di )
                      ') ;
 
 $stmt->execute(
    array(
      ':us'    => $userid ,
-     ':dr'    => $driver ,
      ':tax'   => $taxiid ,
      ':lat'   => $lat ,
      ':long'  => $long ,
@@ -42,6 +41,14 @@ $stmt->execute(
 $count = $stmt->rowCount() ;
 
 if ($count > 0 ) {
+
+   removeMoneyById("users" , "user_balance"  ,  $price , "user_id" , $userid ) ;
+   addMoneyById("taxi" ,  "taxi_balance"  ,  $price , "taxi_id" , $taxiid) ; 
+
+
+    $title = "هام"  ;
+    $message = "يوجد طلب بانتظار الموافقة"  ;
+    sendGCM( $title , $message ,  $tokentaxi, "id", "orderswait") ;
   echo json_encode(array("status" => "success")) ;
 }else {
   echo json_encode(array("status" => "faild")) ;
