@@ -9,7 +9,7 @@ $destlat  =  $_POST['destlat'] ;
 $destlong =  $_POST['destlong'] ;
 $price    =  $_POST['price'] ;
 $distance =  $_POST['distance'] ;
-$tokentaxi = $_POST['tokentaxi'] ;
+// $tokentaxi = $_POST['tokentaxi'] ;
 
 
 
@@ -43,12 +43,17 @@ $count = $stmt->rowCount() ;
 if ($count > 0 ) {
 
    removeMoneyById("users" , "user_balance"  ,  $price , "user_id" , $userid ) ;
-   addMoneyById("taxi" ,  "taxi_balance"  ,  $price , "taxi_id" , $taxiid) ; 
+   addMoneyById("taxi" ,  "taxi_balance"  ,  $price , "taxi_id" , $taxiid) ;
 
 
     $title = "هام"  ;
     $message = "يوجد طلب بانتظار الموافقة"  ;
-    sendGCM( $title , $message ,  $tokentaxi, "id", "orderswait") ;
+    // sendGCM( $title , $message ,  $tokentaxi, "id", "orderswait") ;
+    sendNotifySpecificTaxi($taxiid , $title , $message  , "id" , "orderswait" ) ;
+    $title = "تنبيه"  ;
+    $message = "تم ارسال طلبك بنجاح والان بانتظار موافقة التكسي"  ;
+    sendNotifySpecificUser($userid , $title , $message  , "id" , "orderswaittaxi" ) ;
+
   echo json_encode(array("status" => "success")) ;
 }else {
   echo json_encode(array("status" => "faild")) ;

@@ -5,8 +5,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
   $and = null ;
   $email    = filter_var( $_POST['email'] , FILTER_SANITIZE_EMAIL ) ;
   $password =  $_POST['password'] ;
-  $token = $_POST['token']  ;
 
+
+
+
+  // $token = isset($_POST['token']) ?  $_POST['token'] : NULL  ;
+  $token = $_POST['token'] ?? NULL ;
 
   if (isset($_POST['role'])){
     $role = $_POST['role']  ;
@@ -21,11 +25,25 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
 
    if ($row > 0) {
 
-     $stmt2 = $con->prepare(" UPDATE `users` SET `user_token`= ?  WHERE `user_id` = ? ") ;
-     $stmt2->execute(array($token , $user['user_id'])) ;
+     // $stmt2 = $con->prepare(" UPDATE `users` SET `user_token`= ?  WHERE `user_id` = ? ") ;
+     // $stmt2->execute(array($token , $user['user_id'])) ;
 
 
-       $id        = filterSan($user['user_id'] , "number") ;
+       $id  = filterSan($user['user_id'] , "number") ;
+
+       if ($token != NULL ) {
+          insertTokenUser($id ,$token);
+          $title = "مرحبا"   ;
+          if (isset($role) && $role = 3){
+            $message = " يمكنك من خلال هذا التطبيق الحصول على فرصة عمل في ايصال الطلبات" ;
+          }else {
+            $message = "التطبيق الاول في الكويت يمكنك من خلاله طلب ما تريد تكسي  او طعام والكثير" ;
+          }
+          sendGCM($title  , $message, $token , $id , "login");
+       }
+
+
+
        $username  = filterSan($user['username']) ;
        $email     = filterSan( $user['email']) ;
        $password  = $user['password'] ;
@@ -34,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
        $deliverres = $user['delivery_res'] ;
 
 
-       echo json_encode(array('token' => $token , 'id' => $id , 'username' => $username ,'email' => $email  , 'balance' => $balance   , 'phone' => $phone ,'password' => $password  , 'res' => $deliverres , 'status' => "success"));
+       echo json_encode(array('id' => $id , 'username' => $username ,'email' => $email  , 'balance' => $balance   , 'phone' => $phone ,'password' => $password  , 'res' => $deliverres , 'status' => "success"));
    }else {
      echo json_encode (array('status' => "faild" , 'email' => $email  , 'password' => $password) );
    }

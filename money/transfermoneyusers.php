@@ -16,6 +16,9 @@ if ($count > 0 ) {
  $title = "TalabGoFoodDelivery" ;
  $message = "تم تحويل رصيد"  . $units . " دينار من قبل  "   . $username  .  " اليك " ;
  sendGCM($title , $message ,$token, "trabsfermoney" , "home");
+ $title = "تنبيه" ;
+ $message = "تم التحويل بنجاح"  ;
+ sendNotifySpecificUser($userid , $title , $message  , "" , "donetransfermoney" ) ; 
 
 }else {
   echo json_encode(array("status" => "faild"))  ;

@@ -2,11 +2,14 @@
 include  "../connect.php" ;
 
 $orderid    = $_POST['ordersid'] ;
-$tokenuser  = $_POST['tokenuser'] ;
+
+$userid  = $_POST['userid'] ;
 
 
 $stmt = $con->prepare("UPDATE orderstaxi SET orderstaxi_status = 3 WHERE orderstaxi_id = ? ") ;
+
 $stmt->execute(array($orderid)) ;
+
 $count = $stmt->rowCount() ;
 
 if ($count > 0) {
@@ -16,7 +19,8 @@ if ($count > 0) {
 
   $message = "تم التوصيل بنجاح"  ;
 
-  sendGCM( $title , $message ,  $tokenuser , "page" , "donedelivery");
+  sendNotifySpecificUser($userid , $title , $message  , $userid , "donedelivery") ;
+
 
 echo json_encode(array("status" => "success")) ;
 

@@ -1,37 +1,20 @@
 <?php
 
 function checkAuthenticate() {
-  if ($_SERVER['PHP_AUTH_USER'] != "TalabGoUser@58421710942258459" ||  $_SERVER['PHP_AUTH_PW'] != "TalabGoPassword@58421710942258459") {
-    header('WWW-Authenticate: Basic realm="My Realm"');
-    header('HTTP/1.0 401 Unauthorized');
-    echo 'Page Not Found';
-    exit;
-  }
+  // if ($_SERVER['PHP_AUTH_USER'] != "TalabGoUser@58421710942258459" ||  $_SERVER['PHP_AUTH_PW'] != "TalabGoPassword@58421710942258459") {
+  //   header('WWW-Authenticate: Basic realm="My Realm"');
+  //   header('HTTP/1.0 401 Unauthorized');
+  //   echo 'Page Not Found';
+  //   exit;
+  // }
 }
 
-function getToken($idpar , $type){
 
-  global $con ;
-
-  if ($type == "users") {
-    $stmt = $con->prepare("SELECT user_token FROM  `users`  WHERE user_id = ? ") ;
-  }else {
-      $stmt = $con->prepare("SELECT res_token FROM  `restaurants`  WHERE res_id = ? ") ;
-  }
-
-  $stmt->execute(array($idpar)) ;
-
-
-  $id  = $stmt->fetchColumn() ;
-
-  return $id  ;
-
-}
 function getTokenByPhone($phone){
 
   global $con ;
 
-  $stmt = $con->prepare("SELECT user_token FROM  `users`  WHERE user_phone = ? ") ;
+  $stmt = $con->prepare("SELECT  tokenusers.tokenusers_token  FROM  `users` INNER JOIN tokenusers ON tokenusers.tokenusers_user = users.user_id WHERE user_phone = ? ") ;
 
   $stmt->execute(array($phone)) ;
 
@@ -216,57 +199,126 @@ function addMoneyById($table , $column  ,  $price , $table_id , $id) {
 
 function insertTokenRes($resid , $restoken){
   global $con  ;
-  $sql  = "INSERT INTO `tokenres`(`tokenres_res`, `tokenres_token`) VALUES ( ?  , ? )"  ;
-  $stmt = $con->prepare($sql) ;
-  $stmt->execute(array($resid , $restoken)) ;
-  $count = $stmt->rowCount()   ;
-  return $count ;
+  $check = $con->prepare("SELECT * FROM tokenres WHERE tokenres_res = ? AND tokenres_token = ?") ;
+  $check->execute(array($resid ,$restoken )) ;
+  $checkcount = $check->rowCount() ;
+  if ($checkcount == 0) {
+      $sql  = "INSERT INTO `tokenres`(`tokenres_token` , `tokenres_res`) VALUES ( ?  , ? )"  ;
+      $stmt = $con->prepare($sql) ;
+      $stmt->execute(array($restoken , $resid)) ;
+      $count = $stmt->rowCount()   ;
+      return $count ;
+  }
 }
+
 function insertTokenUser($userid , $usertoken){
   global $con  ;
+  $check = $con->prepare("SELECT * FROM tokenusers WHERE tokenusers_user = ? AND tokenusers_token = ?") ;
+  $check->execute(array($userid ,$usertoken )) ;
+  $checkcount = $check->rowCount() ;
+  if ($checkcount == 0){
   $sql  = "INSERT INTO `tokenusers`(`tokenusers_token`,`tokenusers_user`) VALUES (? , ?)"  ;
   $stmt = $con->prepare($sql) ;
   $stmt->execute(array($usertoken , $userid)) ;
   $count = $stmt->rowCount()   ;
   return $count ;
+  }
 }
+
 function insertTokenTaxi($taxiid , $taxitoken){
   global $con  ;
+  $check = $con->prepare("SELECT * FROM tokentaxi WHERE tokentaxi_taxi = ? AND tokentaxi_token = ?") ;
+  $check->execute(array($taxiid ,$taxitoken)) ;
+  $checkcount = $check->rowCount() ;
+  if ($checkcount == 0){
   $sql  = "INSERT INTO `tokentaxi`( `tokentaxi_token`, `tokentaxi_taxi`) VALUES (? ,  ?)"  ;
   $stmt = $con->prepare($sql) ;
   $stmt->execute(array($taxitoken , $taxiid)) ;
   $count = $stmt->rowCount()   ;
   return $count ;
+  }
 }
 
 
-function deleteTokenRes($resid){
+function deleteTokenRes($resid  , $restoken){
   global $con  ;
-  $sql  = "DELETE FROM `tokenres` WHERE tokenres_res =  ?"  ;
+  $check = $con->prepare("SELECT * FROM tokenres WHERE tokenres_res = ? AND tokenres_token = ?") ;
+  $check->execute(array($resid ,$restoken )) ;
+  $checkcount = $check->rowCount() ;
+  if ($checkcount > 0){
+  $sql  = "DELETE FROM `tokenres` WHERE tokenres_res =  ? AND tokenres_token = ?"  ;
   $stmt = $con->prepare($sql) ;
-  $stmt->execute(array($resid)) ;
+  $stmt->execute(array($resid , $restoken)) ;
   $count = $stmt->rowCount()   ;
   return $count ;
+  }
 }
-function deleteTokenUser($userid){
+function deleteTokenUser($userid , $usertoken){
   global $con  ;
-  $sql  = "DELETE FROM `tokenusers` WHERE tokenusers_user = ?"  ;
+  $check = $con->prepare("SELECT * FROM tokenusers WHERE tokenusers_user = ? AND tokenusers_token = ?") ;
+  $check->execute(array($userid ,$usertoken )) ;
+  $checkcount = $check->rowCount() ;
+  if ($checkcount > 0){
+  $sql  = "DELETE FROM `tokenusers` WHERE tokenusers_user = ? AND tokenusers_token = ? "  ;
   $stmt = $con->prepare($sql) ;
-  $stmt->execute(array($userid)) ;
+  $stmt->execute(array($userid , $usertoken)) ;
   $count = $stmt->rowCount()   ;
   return $count ;
+ }
 }
-function deleteTokenTaxi($taxiid){
+function deleteTokenTaxi($taxiid , $taxitoken){
   global $con  ;
-  $sql  = "DELETE FROM `tokentaxi` WHERE tokentaxi_taxi =  ? "  ;
+  $check = $con->prepare("SELECT * FROM tokentaxi WHERE tokentaxi_taxi = ? AND tokentaxi_token = ?") ;
+  $check->execute(array($taxiid ,$taxitoken)) ;
+  $checkcount = $check->rowCount() ;
+  if ($checkcount > 0){
+  $sql  = "DELETE FROM `tokentaxi` WHERE tokentaxi_taxi =  ?  AND tokentaxi_token = ? "  ;
   $stmt = $con->prepare($sql) ;
-  $stmt->execute(array($taxiid)) ;
+  $stmt->execute(array($taxiid , $taxitoken)) ;
   $count = $stmt->rowCount()   ;
   return $count ;
+  }
+}
+//=========================================================================
+// SEND NOTIFY FOR USERS AND RESTURSANTS AND DELIVERY AND TAXI AND ADMIN  Specifc
+//=========================================================================
+function sendNotifySpecificUser($userid , $title , $message  , $p_id , $p_name ){
+  global $con ;
+  $stmt = $con->prepare("SELECT users.user_id , tokenusers.* FROM users
+                         INNER JOIN tokenusers ON tokenusers.tokenusers_user = users.user_id
+                         WHERE users.user_id = ?");
+  $stmt->execute(array($userid));
+  $users = $stmt->fetchAll(PDO::FETCH_ASSOC) ;
+  foreach ($users as $user) {
+      sendGCM($title  , $message, $user['tokenusers_token'] , $p_id, $p_name) ;
+  }
+}
+function sendNotifySpecificTaxi($taxiid , $title , $message  , $p_id , $p_name ) {
+  global $con ;
+  $stmt = $con->prepare("SELECT taxi.taxi_id , tokentaxi.* FROM taxi
+                         INNER JOIN tokentaxi ON tokentaxi.tokentaxi_taxi = taxi.taxi_id
+                         WHERE  taxi.taxi_id = ?");
+  $stmt->execute(array($taxiid));
+  $taxis = $stmt->fetchAll(PDO::FETCH_ASSOC) ;
+  foreach ($taxis as $taxi) {
+      sendGCM($title  , $message, $taxi['tokentaxi_token'] , $p_id, $p_name) ;
+  }
+}
+function sendNotifySpecificRes($resid , $title , $message  , $p_id , $p_name ) {
+  global $con ;
+  $stmt = $con->prepare("SELECT restaurants.res_id , tokenres.* FROM restaurants
+                         INNER JOIN tokenres ON tokenres.tokenres_res = restaurants.res_id
+                         WHERE restaurants.res_id = ?");
+  $stmt->execute(array($resid));
+  $ress = $stmt->fetchAll(PDO::FETCH_ASSOC) ;
+  foreach ($ress as $res) {
+      sendGCM($title  , $message, $res['tokenres_token'] , $p_id, $p_name) ;
+  }
 }
 
-
-
+//=========================================================================
+// SEND All NOTIFY FOR USERS AND RESTURSANTS AND DELIVERY AND TAXI AND ADMIN
+//=========================================================================
 
 
 ?>

@@ -12,7 +12,7 @@
                                     taxi_price,
                                     taxi_mincharge  ,
                                     taxi_id ,
-                                    taxi_token , 
+                                  
                 (ACOS(COS(RADIANS( $lat  ))
               * COS( RADIANS( taxi.taxi_lat ) )
               * COS( RADIANS( taxi.taxi_long ) - RADIANS( $long) )

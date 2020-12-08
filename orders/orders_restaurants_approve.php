@@ -13,16 +13,17 @@ if ($count > 0 ) {
    echo json_encode( array('status' => 'success' ));
 
 
-   $stmt2 = $con->prepare("SELECT `user_token`  , `role` FROM `users`
+   $stmt2 = $con->prepare("SELECT users.username ,   users.role , tokenusers.* FROM users
+                           JOIN tokenusers ON tokenusers.tokenusers_user = users.user_id
                            WHERE ( `role` = 3 AND `delivery_res` = $resorders )
-                            -- الفكرة الاشخاص يلي بيشتغلو دليفري عن المطعم
+                           -- الفكرة الاشخاص يلي بيشتغلو دليفري عن المطعم
                            OR (`role` = 0  AND `user_id` = $usersorders)
-                             -- الشخص صاحب الطلبية
+                           -- الشخص صاحب الطلبية
                             ") ;
    $stmt2->execute() ;
    $delivers = $stmt2->fetchAll(PDO::FETCH_ASSOC) ;
    foreach ( $delivers as $delivery) {
-           $token = $delivery['user_token'] ;
+           $token = $delivery['tokenusers_token'] ;
            if ($delivery['role'] == 0 ) {
              $title = "TalabGoFoodDelivery" ;
              $message = "تم الموافقة على طلبك من المطعم والطلبية الان قيد التوصيل" ;
@@ -31,7 +32,6 @@ if ($count > 0 ) {
              $title = "TalabGoDelivery" ;
              $message = "يوجد طلبية بانتظار الموافقة" ;
              sendGCM($title , $message ,$token, $resorders , "home");
-
            }
    }
 }else {

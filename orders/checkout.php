@@ -8,11 +8,8 @@ $totalprice = $data['totalprice'] ;
 $lat        = $data['lat']        ;
 $long       = $data['long']       ;
 $timenow    = $data['timenow']    ;
-
 $description  = "تجربة"  ;
 $address  = "تجربة"  ;
-
-$token  = getToken($resid, "res");// Token  for restaurants or user AND Type Res Or User
 
 
 $sql = "INSERT INTO `orders` (`orders_users`,`orders_res` ,  `orders_description`, `orders_lat`,
@@ -53,7 +50,7 @@ if ($count > 0) {
          if ($count3 > 0 && $count4 > 0 ) {
            $title = "TalabGoRestaurants" ;
            $message = "يوجد طلبية بانتظار الموافقة" ;
-           sendGCM($title , $message , $token, $resid , "orders");
+           sendNotifySpecificRes($resid ,  $title , $message , $resid , "orders" ) ;
          }
       }
 }
