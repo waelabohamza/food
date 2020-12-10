@@ -34,12 +34,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
        if ($token != NULL ) {
           insertTokenUser($id ,$token);
           $title = "مرحبا"   ;
-          if (isset($role) && $role = 3){
+          if (isset($role) && $role == "3"){
             $message = " يمكنك من خلال هذا التطبيق الحصول على فرصة عمل في ايصال الطلبات" ;
-          }else {
+          }elseif (isset($role) && $role == "1"){
+              $message = "يمكنك من خلال لوحة التحكم مراقبة جميع العمليات التي تجري على التطبيق" ;
+          }
+          else {
             $message = "التطبيق الاول في الكويت يمكنك من خلاله طلب ما تريد تكسي  او طعام والكثير" ;
           }
           sendGCM($title  , $message, $token , $id , "login");
+          insertNotifySpecifcCatInDatabase($title , $message , 2 , $id ) ; 
        }
 
 

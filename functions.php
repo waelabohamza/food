@@ -14,13 +14,19 @@ function getTokenByPhone($phone){
 
   global $con ;
 
-  $stmt = $con->prepare("SELECT  tokenusers.tokenusers_token  FROM  `users` INNER JOIN tokenusers ON tokenusers.tokenusers_user = users.user_id WHERE user_phone = ? ") ;
+  $stmt = $con->prepare("SELECT  users.user_id , tokenusers.tokenusers_token  FROM  `users` INNER JOIN tokenusers ON tokenusers.tokenusers_user = users.user_id WHERE user_phone = ? ") ;
 
   $stmt->execute(array($phone)) ;
 
-  $mytoken  = $stmt->fetchColumn() ;
+  $values  = $stmt->fetch(PDO::FETCH_ASSOC) ;
+   
+  $value = array() ; 
 
-  return $mytoken  ;
+  $value['token'] = $values['tokenusers_token'] ; 
+  $value['userid'] = $values['user_id'] ; 
+
+
+  return $value  ;
 
 }
 
@@ -279,9 +285,11 @@ function deleteTokenTaxi($taxiid , $taxitoken){
   return $count ;
   }
 }
-//=========================================================================
+//=================================================================================
 // SEND NOTIFY FOR USERS AND RESTURSANTS AND DELIVERY AND TAXI AND ADMIN  Specifc
-//=========================================================================
+//====================================================================================
+
+
 function sendNotifySpecificUser($userid , $title , $message  , $p_id , $p_name ){
   global $con ;
   $stmt = $con->prepare("SELECT users.user_id , tokenusers.* FROM users
@@ -292,7 +300,11 @@ function sendNotifySpecificUser($userid , $title , $message  , $p_id , $p_name )
   foreach ($users as $user) {
       sendGCM($title  , $message, $user['tokenusers_token'] , $p_id, $p_name) ;
   }
+  insertNotifySpecifcCatInDatabase($title , $message , 2 , $userid)  ; 
 }
+
+
+
 function sendNotifySpecificTaxi($taxiid , $title , $message  , $p_id , $p_name ) {
   global $con ;
   $stmt = $con->prepare("SELECT taxi.taxi_id , tokentaxi.* FROM taxi
@@ -303,7 +315,11 @@ function sendNotifySpecificTaxi($taxiid , $title , $message  , $p_id , $p_name )
   foreach ($taxis as $taxi) {
       sendGCM($title  , $message, $taxi['tokentaxi_token'] , $p_id, $p_name) ;
   }
+  insertNotifySpecifcCatInDatabase($title , $message , 0 , $taxiid)  ; 
 }
+
+
+
 function sendNotifySpecificRes($resid , $title , $message  , $p_id , $p_name ) {
   global $con ;
   $stmt = $con->prepare("SELECT restaurants.res_id , tokenres.* FROM restaurants
@@ -314,11 +330,110 @@ function sendNotifySpecificRes($resid , $title , $message  , $p_id , $p_name ) {
   foreach ($ress as $res) {
       sendGCM($title  , $message, $res['tokenres_token'] , $p_id, $p_name) ;
   }
+  insertNotifySpecifcCatInDatabase($title , $message , 1 , $resid)  ; 
+}
+
+
+
+
+//=======================================================================================
+// Insert All NOTIFY FOR USERS AND RESTURSANTS AND DELIVERY AND TAXI AND ADMIN In DATABASE 
+//========================================================================================
+
+
+function insertNotifyEveryCatInDatabase($title , $body , $cat ){
+  global $con  ; 
+  $stmt = $con->prepare("INSERT INTO `message`(
+    `message_title`,
+    `message_body`,
+    `message_cat`
+)
+VALUES(? ,  ? ,   ? )") ;
+  $stmt->execute(array($title , $body , $cat )) ;  
+
+  // 0 = taxi 
+  // 1  = res 
+  // 2 = user 
+
+}
+
+
+function insertNotifySpecifcCatInDatabase($title , $body , $cat , $sid ){
+  global $con  ; 
+  $stmt = $con->prepare("INSERT INTO `message`(
+    `message_title`,
+    `message_body`,
+    `message_cat` , 
+    `message_sid`
+)
+VALUES(? ,  ? ,   ?  ,  ?)") ;
+  $stmt->execute(array($title , $body , $cat  , $sid)) ;  
+
+  // 0 = taxi 
+  // 1  = res 
+  // 2 = user 
+
 }
 
 //=========================================================================
 // SEND All NOTIFY FOR USERS AND RESTURSANTS AND DELIVERY AND TAXI AND ADMIN
 //=========================================================================
+
+
+function sendNotifyEveryUser($type , $title , $message){
+  if ($type == "admin") {
+     $role = 1 ;
+  }if ($type == "delivery") {
+    $role = 3 ;
+  }if($type == "user"){
+    $role = 0 ;
+  }
+  global $con ;
+  $sql = "SELECT  tokenusers.tokenusers_token
+          FROM users
+          INNER JOIN tokenusers
+          ON tokenusers.tokenusers_user = users.user_id
+          WHERE users.role = $role";
+        $stmt = $con->prepare($sql);
+        $stmt->execute() ;
+  while ($token = $stmt->fetchColumn()){
+    sendGCM($title  , $message, $token , "" , "");
+  }
+
+  insertNotifyEveryCatInDatabase($title , $message , 2 ) ; 
+
+}
+
+function sendNotifyEveryRes($title , $message){
+
+  global $con ;
+  $sql = "SELECT tokenres.tokenres_token FROM restaurants
+          INNER JOIN tokenres ON restaurants.res_id = tokenres.tokenres_res ";
+        $stmt = $con->prepare($sql);
+        $stmt->execute() ;
+  while ($token = $stmt->fetchColumn()){
+    sendGCM($title  , $message, $token , "" , "");
+  }
+  insertNotifyEveryCatInDatabase($title , $message , 1 ) ; 
+
+}
+
+function sendNotifyEveryTaxi($title , $message){
+  global $con ;
+  $sql = "SELECT tokentaxi.tokentaxi_token FROM taxi
+          INNER JOIN tokentaxi ON taxi.taxi_id = tokentaxi.tokentaxi_taxi";
+        $stmt = $con->prepare($sql);
+        $stmt->execute() ;
+  while ($token = $stmt->fetchColumn()){
+      sendGCM($title  , $message, $token , "" , "");
+  }
+  insertNotifyEveryCatInDatabase($title , $message , 0 ) ; 
+
+}
+
+
+
+
 
 
 ?>

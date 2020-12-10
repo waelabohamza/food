@@ -5,7 +5,11 @@ $phone =  filterSan($_POST['phone'] , "number") ;
 $units =  $_POST['units'] ;
 $userid = $_POST['userid'] ;
 $username = $_POST['username'] ;
-$token = getTokenByPhone($phone);
+
+$get = getTokenByPhone($phone);     
+$token = $get['token'] ; 
+$useridrecive = $get['userid'] ;
+
 $stmt = $con->prepare("UPDATE users SET  `user_balance` = $units  +  `user_balance`  WHERE `user_phone` = ? ") ;
 $stmt->execute(array($phone)) ;
 $count = $stmt->rowCount() ;
@@ -16,6 +20,8 @@ if ($count > 0 ) {
  $title = "TalabGoFoodDelivery" ;
  $message = "تم تحويل رصيد"  . $units . " دينار من قبل  "   . $username  .  " اليك " ;
  sendGCM($title , $message ,$token, "trabsfermoney" , "home");
+ insertNotifySpecifcCatInDatabase($title , $message , 2 , $useridrecive) ; 
+
  $title = "تنبيه" ;
  $message = "تم التحويل بنجاح"  ;
  sendNotifySpecificUser($userid , $title , $message  , "" , "donetransfermoney" ) ; 

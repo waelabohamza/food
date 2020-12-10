@@ -25,6 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
             $title = "مرحبا";
             $message = "يمكنك من خلال هذا التطبيق  العمل كسائق ";
             sendNotifySpecificTaxi($id , $title , $message  , "id" , "welcome" ) ;
+            insertNotifySpecifcCatInDatabase($title , $message , 0 , $id ) ; 
+            
           }
 
       $username  = filterSan($taxi['taxi_username']) ;

@@ -49,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
     if ($row > 0) {
       // echo "success" ;
       move_uploaded_file($_FILES["file"]["tmp_name"], "../upload/users/". $imagename );
+      
       echo json_encode(array('username' => $username ,'email' => $email ,'password' => $password , 'status' => "success"));
     }
 

@@ -21,6 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
         $title = "مرحبا";
         $message = "يمكنك من خلال هذا التطبيق اضافة الوجبات لديك مما يساعدك في زيادة الطلب على مطعمك";
         sendNotifySpecificRes($res['res_id']   , $title , $message , "id" , "name" );
+        insertNotifySpecifcCatInDatabase($title , $message , 1 , $res['res_id'] ) ; 
+
      }
 
      echo json_encode(array('message' => $res, 'status' => "success"));
