@@ -2,5 +2,6 @@
 include "../connect.php" ;
 $texiid    = $_POST['texiid'];
 $texitoken = $_POST['texitoken'] ;
-deleteTokentexi($texiid , $texitoken);
+deleteTokenTaxi($texiid , $texitoken);
+echo json_encode(array("status" => "success"));
 ?>

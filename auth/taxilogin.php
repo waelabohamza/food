@@ -24,9 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
             insertTokenTaxi( $id , $token) ;
             $title = "مرحبا";
             $message = "يمكنك من خلال هذا التطبيق  العمل كسائق ";
-            sendNotifySpecificTaxi($id , $title , $message  , "id" , "welcome" ) ;
+            // sendNotifySpecificTaxi($id , $title , $message  , "id" , "welcome" ) ;
+            sendGCM($title  , $message, $token , $id , "welcome");
             insertNotifySpecifcCatInDatabase($title , $message , 0 , $id ) ; 
-            
           }
 
       $username  = filterSan($taxi['taxi_username']) ;
