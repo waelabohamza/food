@@ -4,6 +4,7 @@ include "../connect.php" ;
 
 if ($_SERVER['REQUEST_METHOD'] == "POST"){
 
+  
 $username = filterSan($_POST['username']) ;
 
 $email = filterSan($_POST['email'] , "email") ;

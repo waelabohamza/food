@@ -1,22 +1,25 @@
 <?php
 include "../connect.php" ;
+
 if (isset($_POST['cat'])) {
 
 $cat  = $_POST['cat'] ;
+$title = $_POST['title'] ; 
+$body = $_POST['body'] ; 
 
 if ($cat == "0") {
 
-  sendNotifyEveryTaxi("title" , "body") ;
+  sendNotifyEveryTaxi($title , $body  ) ;
 
 
 }elseif ($cat == "1") {
 
-  sendNotifyEveryRes("title" , "body") ;
+  sendNotifyEveryRes($title , $body) ;
 
 
 }else {
 
-  sendNotifyEveryUser("user" , "title" , "wael") ;
+  sendNotifyEveryUser("user" , $title , $body) ;
 
 }
 
