@@ -16,7 +16,6 @@ if ($cat == "0"){
     $userid = $_POST['userid'] ; 
     sendNotifySpecificUser($userid , $title , $body , "" , "welcome") ; 
 }
-
 }
 
 echo json_encode(array("status" => "success")) ;  

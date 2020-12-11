@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2020 at 11:49 AM
+-- Generation Time: Dec 11, 2020 at 04:01 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.2.16
 
@@ -77,6 +77,29 @@ INSERT INTO `items` (`item_id`, `item_name`, `item_size`, `item_price`, `item_de
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `message`
+--
+
+CREATE TABLE `message` (
+  `message_id` int(11) NOT NULL,
+  `message_title` varchar(255) NOT NULL,
+  `message_body` varchar(255) NOT NULL,
+  `message_cat` tinyint(4) NOT NULL,
+  `message_sid` int(11) NOT NULL DEFAULT '0',
+  `message_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `message`
+--
+
+INSERT INTO `message` (`message_id`, `message_title`, `message_body`, `message_cat`, `message_sid`, `message_time`) VALUES
+(26, 'صباح الخير', 'تم ازالة التعليقات السابقة', 1, 1, '2020-12-11 12:52:58'),
+(27, 'اااا', 'اااا', 0, 6, '2020-12-11 12:56:16');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `orders`
 --
 
@@ -99,7 +122,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`orders_id`, `orders_users`, `orders_res`, `orders_description`, `orders_lat`, `orders_long`, `orders_address`, `orders_date`, `orders_total`, `orders_status`, `orders_delivery`) VALUES
-(83, 9, 3, 'تجربة', 33.6366068, 36.2947808, 'تجربة', '2020-12-03 11:39:58', 40.233, 0, 0);
+(83, 9, 3, 'تجربة', 33.6366068, 36.2947808, 'تجربة', '2020-12-03 11:39:58', 40.233, 0, 0),
+(84, 9, 1, 'تجربة', 33.6366059, 36.2947836, 'تجربة', '2020-12-06 21:20:51', 31.232, 3, 14);
 
 -- --------------------------------------------------------
 
@@ -130,8 +154,11 @@ INSERT INTO `orderstaxi` (`orderstaxi_id`, `orderstaxi_user`, `orderstaxi_taxi`,
 (10, 9, 6, 33.6366, 36.2948, 33.5127, 36.2919, 789.26, '2020-12-04 15:30:35', 24.642, 0),
 (11, 9, 6, 33.6366, 36.2948, 33.4917, 36.1941, 1036.07, '2020-12-04 15:31:28', 32.869, 0),
 (12, 9, 6, 33.6366, 36.2948, 33.4444, 36.3795, 882.26, '2020-12-04 15:39:17', 27.742, 0),
-(13, 9, 6, 33.6366, 36.2948, 33.3584, 36.2311, 1342.7, '2020-12-04 16:02:20', 43.09, 0),
-(14, 9, 6, 33.6366, 36.2948, 33.5747, 36.3091, 317.57, '2020-12-04 16:04:16', 8.919, 0);
+(13, 9, 6, 33.6366, 36.2948, 33.3584, 36.2311, 1342.7, '2020-12-04 16:02:20', 43.09, 3),
+(14, 9, 6, 33.6366, 36.2948, 33.5747, 36.3091, 317.57, '2020-12-04 16:04:16', 8.919, 0),
+(15, 9, 6, 33.6366, 36.2948, 33.6349, 36.2892, 71.3, '2020-12-07 22:18:38', 0.71, 1),
+(16, 9, 6, 33.6366, 36.2948, 33.6372, 36.2981, 67.79, '2020-12-07 22:21:13', 0.593, 3),
+(17, 9, 6, 33.6366, 36.2948, 33.6366, 36.2939, 0.0444, '2020-12-08 22:34:59', 0.144, 0);
 
 -- --------------------------------------------------------
 
@@ -151,7 +178,8 @@ CREATE TABLE `orders_details` (
 --
 
 INSERT INTO `orders_details` (`id`, `details_order`, `details_item`, `details_quantity`) VALUES
-(35, 83, 24, 1);
+(35, 83, 24, 1),
+(36, 84, 23, 1);
 
 -- --------------------------------------------------------
 
@@ -178,7 +206,6 @@ CREATE TABLE `restaurants` (
   `res_lon` double NOT NULL DEFAULT '0',
   `res_approve` int(11) NOT NULL DEFAULT '0',
   `res_balance` float NOT NULL DEFAULT '0',
-  `res_token` varchar(255) NOT NULL,
   `res_active` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -186,12 +213,11 @@ CREATE TABLE `restaurants` (
 -- Dumping data for table `restaurants`
 --
 
-INSERT INTO `restaurants` (`res_id`, `res_name`, `res_password`, `res_email`, `res_phone`, `res_type`, `res_description`, `res_time_delivery`, `res_price_delivery`, `res_image`, `res_lisence`, `res_country`, `res_area`, `res_street`, `res_lat`, `res_lon`, `res_approve`, `res_balance`, `res_token`, `res_active`) VALUES
-(1, 'wael', 'wael', 'wael@gmail.com', 343434, 'وجبات غربية', 'dsfsdfsdfdsfdsfsdf', 53, 10, 'fiveguys.jpg', 'lisence5.jpg', 'Lebanon', 'Bqaa Safrin', 'Unnamed Road', 33.806221827166375, 35.84205664694309, 1, 390.676, 'ekGbCTXcSOesEw_Z5xXzWr:APA91bFeiLGaqKe1AxvpgjYHBgMFer94_1Bh8kaqKrzX4vLcYrKLJN3co_UgP5vA3H9RcHm-MNwuHsXN9aP1mQHXZ_b-fWqJLrwAbHYlws71YZyz8uxON4Nef0F7-XgNv1tJADzyCMC-', 1),
-(2, 'pizzahut', 'pizzhut', 'pizzhut@gmail.com', 2323, 'دجاج مقلي', 'جميع انواع البيتزا', 30, 0, 'pizzahut.jpg', 'lisence1.jpg', 'Lebanon', 'Bqaa Safrin', '', 34.06369, 35.8810317, 1, 0, '', 1),
-(3, 'kfc', 'kfcc', 'kfc@gmail.com', 22344, 'دجاج مقلي', 'دجاج مقلي', 30, 20, 'kfc.jpg', 'lisence2.jpg', 'Lebanon', 'Bqaa Safrin', '', 34.06369, 35.8810317, 1, 5901.96, '', 1),
-(4, 'mcdonald', 'mcdonald', 'mcdonald@gmail.com', 75332, 'دجاج مقلي', 'وجبات غربية', 30, 0, 'mcdonalds.jpg', 'lisence3.jpg', 'Lebanon', 'Bqaa Safrin', '', 34.06369, 35.8810317, 1, 0, '', 1),
-(5, 'fiveguys', 'fiveguys', 'fiveguys@gmail.com', 53434, 'دجاج مقلي', 'وجبات غربية', 30, 0, 'fiveguys.jpg', 'lisence4.jpg', 'Lebanon', 'Bqaa Safrin', '', 34.06369, 35.8810317, 1, 0, '', 1);
+INSERT INTO `restaurants` (`res_id`, `res_name`, `res_password`, `res_email`, `res_phone`, `res_type`, `res_description`, `res_time_delivery`, `res_price_delivery`, `res_image`, `res_lisence`, `res_country`, `res_area`, `res_street`, `res_lat`, `res_lon`, `res_approve`, `res_balance`, `res_active`) VALUES
+(1, 'rest\r\n', 'rest', 'rest@gmail.com', 343434, 'وجبات غربية', 'dsfsdfsdfdsfdsfsdf', 53, 10, 'fiveguys.jpg', 'lisence5.jpg', 'Lebanon', 'Bqaa Safrin', 'Unnamed Road', 33.806221827166375, 35.84205664694309, 1, 421.908, 1),
+(2, 'pizzahut', 'pizzhut', 'pizzhut@gmail.com', 2323, 'دجاج مقلي', 'جميع انواع البيتزا', 30, 0, 'pizzahut.jpg', 'lisence1.jpg', 'Lebanon', 'Bqaa Safrin', '', 34.06369, 35.8810317, 1, 0, 1),
+(3, 'kfc', 'kfcc', 'kfc@gmail.com', 22344, 'دجاج مقلي', 'دجاج مقلي', 30, 20, 'kfc.jpg', 'lisence2.jpg', 'Lebanon', 'Bqaa Safrin', '', 34.06369, 35.8810317, 1, 5901.96, 1),
+(4, 'mcdonald', 'mcdonald', 'mcdonald@gmail.com', 75332, 'دجاج مقلي', 'وجبات غربية', 30, 0, 'mcdonalds.jpg', 'lisence3.jpg', 'Lebanon', 'Bqaa Safrin', '', 34.06369, 35.8810317, 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -254,10 +280,8 @@ CREATE TABLE `taxi` (
 --
 
 INSERT INTO `taxi` (`taxi_id`, `taxi_username`, `taxi_email`, `taxi_password`, `taxi_phone`, `taxi_cat`, `taxi_imageuser`, `taxi_model`, `taxi_year`, `taxi_licence`, `taxi_description`, `taxi_lat`, `taxi_long`, `taxi_image`, `taxi_approve`, `taxi_price`, `taxi_mincharge`, `taxi_balance`, `taxi_status`, `taxi_active`, `taxi_token`) VALUES
-(6, 'merft', 'merft@gmail.com', 'merft', 26663636, 23, '1646image_picker8293040523567100888.jpg', 'lada', 2015, '1864scaled_image_picker6835554702791314245.jpg', 'aaaaaaaaaaa', 33.6366, 36.2948, '1.jpg', 1, 30, 50, 317.57, 0, 1, 'd08H_qbsRTetsyMvMAuZUt:APA91bEOVbRZAzUdnxHcHzUOhnR4ujcLvl5AX_BMEamfGguydOThaGH90J5xHV0JcGC9BBNNezFkrESGV4_z97aOaGivEhE8EmBwugrmj1J3lRS6NzHway9r2PR_DBZ1NVAQYm1eav3_'),
-(7, 'hhhh', 'ff@vv.con', 'rhrrhrh', 554428836, 0, '1828scaled_image_picker524985497942818623.jpg', '', 0, '', '', 23, 23, '', 0, 0, 0, 0, 0, 1, ''),
-(9, 'gggggg', 'dg@gs.cd', '777666', 7363736, 23, '1674image_picker2240080299937419601.jpg', 'bbdhd', 1019, '1734scaled_image_picker7043171242623919236.jpg', 'aaaaaaaaaaa', 0, 0, '1818scaled_image_picker4596576888382415399.jpg', 0, 0, 0, 0, 0, 1, ''),
-(10, 'tttttt', 'dddadmin@gmail.com', 'admin', 6776777, 23, '1203image_picker5965372225939215957.jpg', '2262', 22, '1860scaled_image_picker3011539919522572356.jpg', 'aaaaaaaaaaa', 0, 0, '1262scaled_image_picker1246948241743932992.jpg', 0, 0, 0, 0, 0, 1, '');
+(6, 'taxi', 'taxi@gmail.com', 'taxi', 1111, 23, 'image_picker6555251922085966750.jpg', 'lada', 2015, '1864scaled_image_picker6835554702791314245.jpg', 'aaaaaaaaaaa', 33.6365, 36.2948, '1.jpg', 1, 0.1, 0.03, 456.704, 0, 1, 'd08H_qbsRTetsyMvMAuZUt:APA91bEOVbRZAzUdnxHcHzUOhnR4ujcLvl5AX_BMEamfGguydOThaGH90J5xHV0JcGC9BBNNezFkrESGV4_z97aOaGivEhE8EmBwugrmj1J3lRS6NzHway9r2PR_DBZ1NVAQYm1eav3_'),
+(7, 'wael', 'wael@gmail.com', 'wael', 5842171, 0, '1828scaled_image_picker524985497942818623.jpg', '', 0, '', '', 23, 23, '', 0, 0, 0, 0, 0, 1, '');
 
 -- --------------------------------------------------------
 
@@ -271,6 +295,13 @@ CREATE TABLE `tokenres` (
   `tokenres_token` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `tokenres`
+--
+
+INSERT INTO `tokenres` (`tokenres_id`, `tokenres_res`, `tokenres_token`) VALUES
+(1, 1, 'fHOjr6yOTlScn7hsqndhbU:APA91bGVmewROjfke5ttqVcnj7Hk_HAHeut1YeNWVthTIMu6ypZf5cH3MgUsbw1ZL5WBrxIM0OCeEpRLHPZigWJFZc14u_heX8PAizUnH8od-X2LE_I4obragG4pJBQaovZe4bLAtEbU');
+
 -- --------------------------------------------------------
 
 --
@@ -283,6 +314,13 @@ CREATE TABLE `tokentaxi` (
   `tokentaxi_taxi` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `tokentaxi`
+--
+
+INSERT INTO `tokentaxi` (`tokentaxi_id`, `tokentaxi_token`, `tokentaxi_taxi`) VALUES
+(3, 'eOp9dvhqRX6IWtja_S-wsr:APA91bGd9IQAa6NRdUBmWgCTjjxyoXsG36LiJt11gJYCbvfmgc5ShdMmWyWGRJkAj3og3cdIg48BPsJiUblJQJT9kAUVvjY3wC-yXp2YigJnQNsZ-JI6PvFvM25BOi7H4ZSKa3NF1E39', 6);
+
 -- --------------------------------------------------------
 
 --
@@ -294,6 +332,19 @@ CREATE TABLE `tokenusers` (
   `tokenusers_token` varchar(255) NOT NULL,
   `tokenusers_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tokenusers`
+--
+
+INSERT INTO `tokenusers` (`tokenusers_id`, `tokenusers_token`, `tokenusers_user`) VALUES
+(6, 'e4GxRewSRD-ttmCa6m_hMX:APA91bHnefK6LsXW1HRBETpTTdz5RG4NuPbOffXflT2XmFi0t-tkm73L9qeEWSiNnpRwEoKpc7zLTaFKbdi18S1lS-69kqJcjkQGrKfcRXRTcC2DQpuW9IDgGdX_3SlWxUhj1vrA253y', 14),
+(8, 'cqesTr1RS8mIozs18HIFmH:APA91bERfWrPunllvjiACwq-xFq83LVUhKwlYwFDitl2wmD6-PTjzKIR4Xbay4lqFCp4AbzDBSWiOCL6ssHrvLNndMZIHV-zPh7FRE2bdMkgyiwb88pdAAMLMSg9AunY_DHLNrzPGPrV', 9),
+(12, 'd_cUmLRySquq3Nrd8QY09C:APA91bFL38wnhgXnKIl1U_ssUD1VEJeaxUNvnXPh_xEsAwOghqVvNBFN93NMsUAw9KDNbt5H5iWmspKhCvfd9fUBATYsG5oaxaCHkb_JfvIrKV6DRsHHcGVfHb0HlWqvJSNTGzKHRF_0', 9),
+(13, 'dy1ckeGLQfee9AS7Qn6D3s:APA91bGnKRfnHMCiKbP3aTRgv3Gnw1YsSNGqu0qxTjXzvquPDOuk1gUMP7KuzoVqzoa5kkiFBXqMjMN-Ewine1R4TGi-ZC5s99EXT_MvbF8l7kM2lMcBGIq4QiB3XnpPju2wxy12y7Xm', 18),
+(15, 'fQz-xCBpTjWGHqVSByoA0r:APA91bFO_vdpSR2e6mLwOvbaDqxVkOin-hcwdwaAy6VBbRnWFtsfmfG9ybuslYgLcg1lMB1NNzri7huV81A9L8IcRYk2nyDVbm2yesbR2ZHpE9ntRhjIgeUL65_HOkRE5wN8xvZQuwgC', 18),
+(17, 'dgxuCPuoQpK6EL6vgnnysJ:APA91bG5D0fx4jBElRiYyj11ap-5HL2a-JYqnsZi0dmHw2OSbe0EOR2WDAQfNHW_7J4USM4uSH1jkvFJZbMsw5wHVAZLfq7_EQy9sH_70iYfm-PHvGIYPc4ehDmMijiuMExJpcGCO04O', 9),
+(18, 'cJYckLziSr2uuiDgBhuRJk:APA91bFjQnE5v3eNhZkTEqzdL0_9Gax4rwA1UbOfr2OlUzfp64LhlCd8zHnfKs55c-Op8oCyB7zxowlNkbBwk0GiG3vlRm_HdcC-Jn_lJnG39sirJfp8_oSxJMDs0D7kq4vT9I5LaQfx', 9);
 
 -- --------------------------------------------------------
 
@@ -312,7 +363,6 @@ CREATE TABLE `users` (
   `verfiycode` mediumint(9) NOT NULL,
   `role` int(11) NOT NULL DEFAULT '0',
   `delivery_res` int(11) NOT NULL DEFAULT '0',
-  `user_token` varchar(255) NOT NULL,
   `active` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -320,11 +370,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `user_phone`, `user_balance`, `user_image`, `verfiycode`, `role`, `delivery_res`, `user_token`, `active`) VALUES
-(9, 'wael', 'wael', 'wael@gmail.com', 32423, 339.73, 'avatar.png', 0, 0, 0, 'd_DvxMAURPWxp4pKhO9BAG:APA91bHjQ_k5QHZwUFtRiHeafXnlRH29lBvCA_ERGXaUVfQ6WbYqZz-gAWsRbXEv7NHsAXmPgv7eCnrNwVF9wVg_ikokNJXRmMKhAu8sPTLlEG6UzyaCw_67kFEMGPfwurJcaUYxtgac', 0),
-(14, 'basel', 'basel', 'basel@gmail.com', 11122, 0, 'image_picker4480479662992251446.jpg', 0, 3, 1, 'cX7jbn7zQHaq4E8_yv390c:APA91bGO6f4VyLWekzCNQMIsL4tPzC2_CnjdSTemLgnfxrWFc9e-PbF43gsNXZUO9Gtr-9R7VmaC7wLyPEbUVRyAEuI8i3GbBiZNS1prk7l2yOJvMI72q30LiGTpdjJpqm5KBLyGCv_1', 0),
-(16, 'merft', 'merft', 'merft@gmail.com', 232323, 0, '1224image_picker4515170018689992742.jpg', 0, 4, 1, 'sdfsdfsdf23fwefsdfsdf', 0),
-(18, 'admin', 'admin', 'admin@gmail.com', 0, 0, '', 0, 1, 0, 'fKZDCgF-SdusJD2KQPMchW:APA91bFKh1eAS3VUgJwWX8V_bbU2DCr9RR05nkupwe2hULvQIqa5kSyTm0ZVRbiSjDWd9_aEEph3YRYpSv1TW1w_FP8QbeXTZrOb4dKrmYlcD6tdowC_RdsmNhLTCj4FVWatd0nqpAfI', 0);
+INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `user_phone`, `user_balance`, `user_image`, `verfiycode`, `role`, `delivery_res`, `active`) VALUES
+(9, 'wael', 'wael', 'wael@gmail.com', 32423, 136.364, 'image_picker7097442396910198098.jpg', 0, 0, 0, 0),
+(14, 'delivery', 'delivery', 'delivery@gmail.com', 11122, 1033, 'image_picker4480479662992251446.jpg', 0, 3, 1, 0),
+(16, 'merft', 'merft', 'merft@gmail.com', 232323, 0, '1224image_picker4515170018689992742.jpg', 0, 3, 7, 0),
+(18, 'admin', 'admin', 'admin@gmail.com', 0, 0, '', 0, 1, 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -343,6 +393,12 @@ ALTER TABLE `items`
   ADD PRIMARY KEY (`item_id`),
   ADD KEY `items_ibfk_1` (`item_cat`),
   ADD KEY `item_res` (`item_res`);
+
+--
+-- Indexes for table `message`
+--
+ALTER TABLE `message`
+  ADD PRIMARY KEY (`message_id`);
 
 --
 -- Indexes for table `orders`
@@ -425,7 +481,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `items`
@@ -434,28 +490,34 @@ ALTER TABLE `items`
   MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
+-- AUTO_INCREMENT for table `message`
+--
+ALTER TABLE `message`
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orders_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `orders_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `orderstaxi`
 --
 ALTER TABLE `orderstaxi`
-  MODIFY `orderstaxi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `orderstaxi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `orders_details`
 --
 ALTER TABLE `orders_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `restaurants`
 --
 ALTER TABLE `restaurants`
-  MODIFY `res_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `res_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `schools`
@@ -467,31 +529,31 @@ ALTER TABLE `schools`
 -- AUTO_INCREMENT for table `taxi`
 --
 ALTER TABLE `taxi`
-  MODIFY `taxi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `taxi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tokenres`
 --
 ALTER TABLE `tokenres`
-  MODIFY `tokenres_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `tokenres_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tokentaxi`
 --
 ALTER TABLE `tokentaxi`
-  MODIFY `tokentaxi_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `tokentaxi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tokenusers`
 --
 ALTER TABLE `tokenusers`
-  MODIFY `tokenusers_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `tokenusers_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
