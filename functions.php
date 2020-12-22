@@ -1,5 +1,7 @@
 <?php
-
+// date_default_timezone_set('Asia/Kuwait');
+// Asia/Kuwait
+$now = date('Y-m-d H:i:s' , time()) ; 
 function checkAuthenticate() {
   // if ($_SERVER['PHP_AUTH_USER'] != "TalabGoUser@58421710942258459" ||  $_SERVER['PHP_AUTH_PW'] != "TalabGoPassword@58421710942258459") {
   //   header('WWW-Authenticate: Basic realm="My Realm"');
@@ -343,13 +345,15 @@ function sendNotifySpecificRes($resid , $title , $message  , $p_id , $p_name ) {
 
 function insertNotifyEveryCatInDatabase($title , $body , $cat ){
   global $con  ; 
+  global $now ; 
   $stmt = $con->prepare("INSERT INTO `message`(
     `message_title`,
     `message_body`,
-    `message_cat`
+    `message_cat` , 
+    `message_time`
 )
-VALUES(? ,  ? ,   ? )") ;
-  $stmt->execute(array($title , $body , $cat )) ;  
+VALUES(? ,  ? ,   ?  , ?)") ;
+  $stmt->execute(array($title , $body , $cat  , $now  )) ;  
 
   // 0 = taxi 
   // 1  = res 
@@ -360,14 +364,16 @@ VALUES(? ,  ? ,   ? )") ;
 
 function insertNotifySpecifcCatInDatabase($title , $body , $cat , $sid ){
   global $con  ; 
+  global $now ; 
   $stmt = $con->prepare("INSERT INTO `message`(
     `message_title`,
     `message_body`,
     `message_cat` , 
-    `message_sid`
+    `message_sid` , 
+    `message_time`
 )
-VALUES(? ,  ? ,   ?  ,  ?)") ;
-  $stmt->execute(array($title , $body , $cat  , $sid)) ;  
+VALUES(? ,  ? ,   ?  ,  ? , ? )") ;
+  $stmt->execute(array($title , $body , $cat  , $sid , $now )) ;  
 
   // 0 = taxi 
   // 1  = res 
