@@ -5,7 +5,7 @@ include "../connect.php" ;
 if ($_SERVER['REQUEST_METHOD'] == "POST"){
 
 $title  = $_POST['offers_title'] ;
-$body   = $_POST['offer_body'] ;
+$body   = $_POST['offers_body'] ;
 
 $imagename =   rand(1000 , 2000) . $_FILES['file']['name'] ;
 
