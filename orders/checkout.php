@@ -10,23 +10,24 @@ $long       = $data['long']       ;
 $timenow    = $data['timenow']    ;
 $description  = "تجربة"  ;
 $address  = "تجربة"  ;
-
+$type = $data['type'] ;
 
 $sql = "INSERT INTO `orders` (`orders_users`,`orders_res` ,  `orders_description`, `orders_lat`,
                               `orders_long`, `orders_address`, `orders_date`,
-                              `orders_total`, `orders_status`)
-VALUES(:us , :res , :des , :lat , :long  , :ad , :dat , :tot , :st ) ";
+                              `orders_total`, `orders_status` , `orders_type`)
+VALUES(:us , :res , :des , :lat , :long  , :ad , :dat , :tot , :st  , :ty ) ";
 $stmt = $con->prepare($sql) ;
 $stmt->execute(array(
   ":us"      => $userid        ,
   ":res"     => $resid         ,
-  ":des"     => $description       ,
+  ":des"     => $description   ,
   ":lat"     => $lat           ,
   ":long"    => $long          ,
-  ":ad"      => $address     ,
+  ":ad"      => $address       ,
   ":dat"     => $timenow       ,
   ":tot"     => $totalprice    ,
-  ":st"      => "0"
+  ":st"      => "0"            ,
+  ":ty"      => $type
 )) ;
 $count = $stmt->rowCount();
 $orderid = maxId("orders_id" , "orders")     ;

@@ -9,9 +9,9 @@ include "../connect.php" ;
     $userid = $_POST['userid'] ;
     $status = $_POST['status'] ;
 
-    $and = "AND orders_delivery = $userid AND  orders_status = $status   " ;
+    $and = "AND orders_delivery = $userid AND  orders_status = $status  AND orders_type = 'delivery' " ;
     if ( $_POST['status'] == 1 ){
-      $and = " AND  orders_status = $status AND orders_delivery = 0  " ;
+      $and = " AND  orders_status = $status AND orders_delivery = 0 AND  orders_type = 'delivery' " ;
     }
 
 

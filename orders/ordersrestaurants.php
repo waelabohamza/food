@@ -12,7 +12,12 @@ include "../connect.php" ;
     $stmt = $con->prepare("SELECT DISTINCT  orders_id , orders.*  , users.* , restaurants.* FROM orders
     INNER JOIN users ON users.user_id = orders.orders_users
     INNER JOIN restaurants ON restaurants.res_id = orders.orders_res
-    WHERE orders_res = ? AND orders_status = 0
+    WHERE orders_res = ? 
+                         AND  ( orders_status = 0 AND orders_type = 'delivery' ) 
+                         OR   ( orders_status = 0 AND orders_type = 'drivethru' ) 
+                         OR   ( orders_status = 1 AND orders_type = 'drivethru' ) 
+                         OR   ( orders_status = 0 AND orders_type = 'table' ) 
+                         OR   ( orders_status = 1 AND orders_type = 'table' ) 
      ") ;
     $stmt->execute(array( $resid )) ;
 
