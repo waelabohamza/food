@@ -11,11 +11,11 @@ $timenow    = $data['timenow']    ;
 $description  = "تجربة"  ;
 $address  = "تجربة"  ;
 $type = $data['type'] ;
-
+$ordertable = $data['ordertable'] ; 
 $sql = "INSERT INTO `orders` (`orders_users`,`orders_res` ,  `orders_description`, `orders_lat`,
                               `orders_long`, `orders_address`, `orders_date`,
-                              `orders_total`, `orders_status` , `orders_type`)
-VALUES(:us , :res , :des , :lat , :long  , :ad , :dat , :tot , :st  , :ty ) ";
+                              `orders_total`, `orders_status` , `orders_type` , `orders_table`)
+VALUES(:us , :res , :des , :lat , :long  , :ad , :dat , :tot , :st  , :ty  , :tb) ";
 $stmt = $con->prepare($sql) ;
 $stmt->execute(array(
   ":us"      => $userid        ,
@@ -27,7 +27,8 @@ $stmt->execute(array(
   ":dat"     => $timenow       ,
   ":tot"     => $totalprice    ,
   ":st"      => "0"            ,
-  ":ty"      => $type
+  ":ty"      => $type          ,
+  ":tb"      => $ordertable 
 )) ;
 $count = $stmt->rowCount();
 $orderid = maxId("orders_id" , "orders")     ;
