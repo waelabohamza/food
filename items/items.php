@@ -20,8 +20,7 @@
        $where = null  ;
    }
 
-   $stmt = $con->prepare("
-       SELECT items.* , categories.* , restaurants.*
+   $stmt = $con->prepare("SELECT items.* , categories.* , restaurants.*
        FROM items
        INNER JOIN categories
        ON items.item_cat = categories.cat_id
