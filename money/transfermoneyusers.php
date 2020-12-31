@@ -14,9 +14,7 @@ if ($countuser > 0) {
 
   $get = getTokenByPhone($phone);
   $useridrecive = $get['userid'] ;
-
-
-
+  $usernamerecive = $get['username'] ;
   $stmt = $con->prepare("UPDATE users SET  `user_balance` = $units  +  `user_balance`  WHERE `user_phone` = ? ") ;
   $stmt->execute(array($phone)) ;
   $count = $stmt->rowCount() ;
@@ -26,10 +24,13 @@ if ($countuser > 0) {
    echo json_encode(array("status" => "success"))  ;
    $title = "TalabGoFoodDelivery" ;
    $message = "تم تحويل رصيد"  . $units . " دينار من قبل  "   . $username  .  " اليك " ;
+   bill($units , $useridrecive , 1  , "تحويل مالي" , $message  );
    sendNotifySpecificUser($useridrecive , $title , $message  , "" , "home" ) ;
    $title = "تنبيه" ;
-   $message = "تم التحويل بنجاح"  ;
+   $message = " تم التحويل بنجاح الى " . $usernamerecive  ;
    sendNotifySpecificUser($userid , $title , $message  , "" , "donetransfermoney" ) ;
+   bill($units , $userid , 0  , "تحويل مالي" , $message  );
+
 }
 }else {
   echo json_encode(array("status" => "faild"))  ;

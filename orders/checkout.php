@@ -47,6 +47,7 @@ if ($count > 0) {
          $stmt3->execute() ;
          $count3  = $stmt3->rowCount() ;
          $stmt4  = $con->prepare("UPDATE `users` SET  `user_balance` = `user_balance` - $totalprice  WHERE `user_id` = $userid ") ;
+         bill($totalprice , $userid , 0 , "طلب طعام"  , "طلب طعام ");
          $stmt4->execute() ;
          $count4 = $stmt4->rowCount() ;
          if ($count3 > 0 && $count4 > 0 ) {

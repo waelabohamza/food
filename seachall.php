@@ -3,13 +3,10 @@
 include "connect.php";
 $i = 0;
 $searcharray = array();
-
 $search = $_POST['search'];
-
 $stmtcat = $con->prepare("SELECT * FROM categories WHERE cat_name LIKE '%$search%' LIMIT 10 ");
 $stmtcat->execute();
 $countcat = $stmtcat->rowCount();
-
 $datacat = array();
 
 
