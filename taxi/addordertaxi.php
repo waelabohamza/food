@@ -43,7 +43,7 @@ $count = $stmt->rowCount() ;
 if ($count > 0 ) {
 
    removeMoneyById("users" , "user_balance"  ,  $price , "user_id" , $userid ) ;
-   bill($price , $userid  , 0 , "طلب تكسي" , "طلب تكسي") ;  
+   bill($price , $userid  , 0  , "طلب تكسي" , "تحويل الى حساب التكسي") ;  
    addMoneyById("taxi" ,  "taxi_balance"  ,  $price , "taxi_id" , $taxiid) ;
 
 

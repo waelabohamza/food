@@ -9,10 +9,10 @@ $stmt = $con->prepare("UPDATE users SET  `user_balance` = $units + `user_balance
 $stmt->execute( array( $phone)) ;
 $count = $stmt->rowCount() ;
 if ($count > 0 ) {
-bill($units , $userid , "1" , "تحويل مالي" , "تم تحويل رصيد من  TalabPay") ; 
+bill($units , $userid , "1" , " تحويل مالي" , " تم تحويل رصيد من  TalabPay") ; 
  echo json_encode(array("status" => "success" , "token" => $token))  ;
  $title = "TalabGoFoodDelivery" ;
- $message = "تم تحويل رصيد " . $units . " دينار من قبل TalabPay " ;
+ $message = " تم تحويل رصيد " . $units . " دينار من قبل TalabPay " ;
  sendGCM($title , $message ,$token, "trabsfermoney" , "home");
  insertNotifySpecifcCatInDatabase($title , $message , 2 , $userid) ; 
 }else {

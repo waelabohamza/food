@@ -23,11 +23,11 @@ if ($countuser > 0) {
     $stmt2->execute(array($userid)) ;
    echo json_encode(array("status" => "success"))  ;
    $title = "TalabGoFoodDelivery" ;
-   $message = "تم تحويل رصيد"  . $units . " دينار من قبل  "   . $username  .  " اليك " ;
+   $message = " تم تحويل رصيد"  . $units . " دينار من قبل  "   . $username  .  " اليك " ;
    bill($units , $useridrecive , 1  , "تحويل مالي" , $message  );
    sendNotifySpecificUser($useridrecive , $title , $message  , "" , "home" ) ;
    $title = "تنبيه" ;
-   $message = " تم التحويل بنجاح الى " . $usernamerecive  ;
+   $message = " تم التحويل   الى " . $usernamerecive  ;
    sendNotifySpecificUser($userid , $title , $message  , "" , "donetransfermoney" ) ;
    bill($units , $userid , 0  , "تحويل مالي" , $message  );
 
