@@ -8,7 +8,12 @@
    if ( isset($_POST['resid']) AND isset($_POST['catid'])){
      $resid  = $_POST['resid'] ;
      $catid  = $_POST['catid'] ;
-     $where = "WHERE item_res = $resid  AND item_cat = $catid  " ;
+     if ($catid == "all"){
+      $where = "WHERE item_res = $resid " ;
+
+     }else {
+      $where = "WHERE item_res = $resid  AND item_cat = $catid  " ;
+     }
 
    }elseif(isset($_POST['resid']) AND !isset($_POST['catid']) ) {
        $resid  = $_POST['resid'] ;
@@ -41,7 +46,3 @@
   echo json_encode(array(0 => "faild")) ;
 
 }
-
-
-
-?>
