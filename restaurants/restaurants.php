@@ -2,6 +2,8 @@
 
    include "../connect.php" ;
 
+    $and = null ;  
+
      if (isset($_POST['resapprove'])){
      	$value = $_POST['resapprove'] ;
      	$where = "WHERE res_approve = '$value' " ;
@@ -13,7 +15,16 @@
      	$where = "WHERE res_approve  = 1"  ;
      }
 
-   $stmt = $con->prepare("SELECT   *   FROM `restaurants` $where ");
+     if (isset($_POST['type'])) 
+     {
+         $type = $_POST['type'] ; 
+         $and = "AND res_type = '$type' " ; 
+     }
+     else {
+       $and = null ; 
+     }
+
+   $stmt = $con->prepare("SELECT   *   FROM `restaurants` $where $and ");
 
    $stmt->execute();
 
