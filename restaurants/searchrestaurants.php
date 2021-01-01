@@ -23,7 +23,3 @@
   }else {
     echo json_encode(array("0" => "faild")) ;
   }
-
-
-
-?>
