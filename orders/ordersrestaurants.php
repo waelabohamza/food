@@ -13,13 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
   if ($typeorder == "wait") {
     $and = "AND orders_status = 0";
   } elseif ($typeorder == "prepare") {
-    $and = "AND   ( orders_status = 1 AND orders_type != 'delivery' )  ";
+    $and = "AND   ( orders_status = 1 AND orders_type != 'delivery' )
+            OR   ( orders_status = 2 AND orders_type  = 'tableqrcode' )  ";
     // AND   ( orders_status = 1 AND orders_type = 'drivethru' ) 
     //          OR   ( orders_status = 1 AND orders_type = 'table' )
   } elseif ($typeorder == "delivery") {
     $and = "AND ( orders_status = 0 OR  orders_status = 1 ) AND orders_type == 'delivery' ";
-  }
-  else {
+  } else {
     $and = "AND ( orders_status = 3 ) ";
   }
 

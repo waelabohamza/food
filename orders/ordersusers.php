@@ -5,12 +5,19 @@ include "../connect.php" ;
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $userid = $_POST['userid'] ;
+    $status = $_POST['status'] ; 
 
-    if (isset($_POST['status'])) {
+    if ( $status == "wait") {
+
+      $and = "AND orders_status = 0" ;
+
+    }elseif ($status == "done"){
 
       $and = "AND orders_status = 3" ;
-    }else {
-      $and = "AND orders_status != 3" ;
+
+    }
+    else {
+      $and = "AND orders_status != 3 AND orders_status != 0 " ;
 
     }
 
@@ -44,5 +51,6 @@ include "../connect.php" ;
 
   }
 
-
-?>
+  // 0 
+  // 1 or 2    prepare or delivery  // Proccess
+  // 3 done   
