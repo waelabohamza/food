@@ -27,6 +27,7 @@ include "../connect.php" ;
                    $title = "TalabGoFoodDelivery" ;
                    $message = "تم الموافقة على طلبك من المطعم والطلبية الان قيد التوصيل" ;
                    sendGCM($title , $message ,$token, $resorders , "orderswait");
+                   insertNotifySpecifcCatInDatabase($title  , $message , 2  , "" , "orders"  ) ; 
                  }if ($delivery['role'] == 3 ) {
                    $title = "TalabGoDelivery" ;
                    $message = "يوجد طلبية بانتظار الموافقة" ;
@@ -34,11 +35,7 @@ include "../connect.php" ;
                  }
          }
         // End Send Message
-      }elseif ($type == "drivethru"){
-        $title = "TalabGoFoodDelivery" ;
-        $message = "تم الموافقة على طلبك من المطعم والطلبية الان قيد التحضير" ;
-        sendNotifySpecificUser($usersorders ,$title , $message , "" , "" ) ; 
-      }elseif ( $type == "table" ){
+      }elseif ($type != "delivery"){
         $title = "TalabGoFoodDelivery" ;
         $message = "تم الموافقة على طلبك من المطعم والطلبية الان قيد التحضير" ;
         sendNotifySpecificUser($usersorders ,$title , $message , "" , "" ) ; 
@@ -54,6 +51,3 @@ include "../connect.php" ;
 // 2 تم الموافقة على الطلب من قبل عامل التوصيل
 // 3 تم التوصيل
 // في حال كان الطلب نوعه طاولة او استلام لايوجد 2 وانما مباشرة 3
-
-
-?>
