@@ -12,6 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
   $type           = filterSan($_POST['type']);
   $resid          = filterSan($_POST['resid'] , "number") ;
 
+  $getidbyname =  $con->prepare("SELECT catsres_id FROM catsres  WHERE catsres_name = ? ") ; 
+  $getidbyname->execute(array($type)) ;
+  $type = $getidbyname->fetchColumn() ;  
+
   $stmt = $con->prepare("UPDATE `restaurants` SET `res_country` = ? , `res_area` = ? , `res_street` = ? , `res_time_delivery` = ?  , `res_price_delivery` = ? , `res_description` = ? , `res_type` = ?   WHERE `res_id` = ? ") ;
 
   $stmt->execute(array($country , $area ,  $street ,  $timedelivery , $pricedelivery   , $description  , $type ,   $resid));
