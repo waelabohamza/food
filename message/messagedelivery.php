@@ -2,8 +2,8 @@
 include "../connect.php" ; 
 $deliveryid = $_POST['deliveryid']; 
 $stmt = $con->prepare("SELECT * FROM `message` 
-                       WHERE  (message_cat = 3 AND message_sid = 0 ) 
-                       OR     (message_cat = 3 AND message_sid = ?)
+                       WHERE  (message_cat = 2 AND message_sid = 0 ) 
+                       OR     (message_cat = 2 AND message_sid = ?)
                        ORDER BY message_id DESC
                        ") ;
 $stmt->execute(array($deliveryid)) ;
