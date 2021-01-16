@@ -3,6 +3,7 @@ include "../connect.php";
 if ($_SERVER['REQUEST_METHOD'] == "POST"){
 
   $username = filter_var($_POST['res_name'] , FILTER_SANITIZE_STRING) ;
+  $nameen = filter_var($_POST['res_name_en'] , FILTER_SANITIZE_STRING) ;
   $email    = filter_var($_POST['res_email'] , FILTER_SANITIZE_EMAIL);
   $password =  $_POST['res_password'] ;
   $phone = intval($_POST['res_phone']) ;
@@ -23,8 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
   if ($row > 0 ) {
     echo json_encode(array('status' => "email OR phone already found"));
   }else { // if user not exist =>  not rigister => start register
-    $stmt   = $con->prepare("INSERT INTO restaurants(`res_name` , `res_email` , `res_phone` , `res_password` , `res_image` , `res_lisence`) VALUES (? , ? , ? ,  ? , ?   , ?)") ;
-    $stmt->execute(array($username , $email , $phone , $password , $imagenamelogo , $imagenamelisence)) ;
+    $stmt   = $con->prepare("INSERT INTO restaurants(`res_name` , `res_name_en` , `res_email` , `res_phone` , `res_password` , `res_image` , `res_lisence`) VALUES (? , ? , ? , ? ,  ? , ?   , ?)") ;
+    $stmt->execute(array($username  , $nameen, $email , $phone , $password , $imagenamelogo , $imagenamelisence)) ;
     $row = $stmt->rowcount() ;
     if ($row > 0) {
       // echo "success" ;

@@ -6,6 +6,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
 
 $catname = $_POST['cat_name'] ;
 
+$catname_en = $_POST['cat_name_en'] ;
+
+
 $catid = $_POST['cat_id'] ;
 
 $itemcheck = getThing("categories" , "cat_id" , $catid) ;
@@ -19,10 +22,10 @@ if (isset($_FILES['file'])) {
 
 
      $stmt = $con->prepare("UPDATE `categories`
-     	                    SET `cat_name`= ? ,`cat_photo`= ?
+     	                    SET `cat_name`= ? ,`cat_photo`= ? , `cat_name_en` =? 
      	                    WHERE `cat_id` = ?
      	                    ") ;
-     $stmt->execute(array($catname , $imagename , $catid)) ;
+     $stmt->execute(array($catname , $imagename , $catid , $catname_en)) ;
      $count = $stmt->rowCount() ;
      if ($count > 0 ) {
      	   if (file_exists("../upload/categories/" . $imageold )){

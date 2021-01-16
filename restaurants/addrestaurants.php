@@ -3,6 +3,7 @@ include "../connect.php";
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
   $name           =   filter_var($_POST['res_name'], FILTER_SANITIZE_STRING);
+  $nameen           =   filter_var($_POST['res_name_en'], FILTER_SANITIZE_STRING);
   $email          =   filter_var($_POST['res_email'], FILTER_SANITIZE_EMAIL); 
   $password       =   $_POST['res_password'];
   $phone          =   filterSan($_POST['phone'], "number");
@@ -22,10 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
   if ($row > 0) {
     echo json_encode(array('status' => "email Or Phone already found"));
   } else { // if user not exist =>  not rigister => start register
-    $stmt   = $con->prepare("INSERT INTO restaurants(`res_name` , `res_email` , `res_password` , `res_image` , `res_lisence` , `res_phone` , `res_approve` )
-                             VALUES (:na , :em , :pa , :im , :lis  , :ph , 1)");
+    $stmt   = $con->prepare("INSERT INTO restaurants(`res_name`  , res_name_en, `res_email` , `res_password` , `res_image` , `res_lisence` , `res_phone` , `res_approve` )
+                             VALUES (:na , :naen ,  :em , :pa , :im , :lis  , :ph , 1)");
     $stmt->execute(array(
       ':na'   =>  $name,
+      ":naen" =>  $nameen , 
       ':em'   =>  $email,
       ':pa'   =>  $password,
       ':im'   =>  $imagenamelogo,

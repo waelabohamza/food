@@ -4,9 +4,9 @@ include "../connect.php" ;
 
 if ($_SERVER['REQUEST_METHOD'] == "POST"){
 
-$itemname = $_POST['item_name'] ;
-
-$catname = trim($_POST['cat_name']) ;
+$itemname = $_POST['item_name']       ;
+$itemnameen = $_POST['item_name_en']  ;
+$catname = trim($_POST['cat_name'])   ;
 
 $stmt2 = $con->prepare("SELECT * FROM categories WHERE cat_name = ? ") ;
 $stmt2->execute(array($catname)) ;
@@ -38,11 +38,11 @@ $itemprice = $_POST['item_price'] ;
 $imagename =  rand(1000 , 2000) . $_FILES['file']['name'];
 
 
-$sql = "INSERT INTO `items`(  `item_name`, `item_size`, `item_price`, `item_image`, `item_cat` , `item_res`)
-        VALUES (?  , ? ,  ? , ? ,  ? , ?)" ;
+$sql = "INSERT INTO `items`(  `item_name` , `item_name_en`, `item_size`, `item_price`, `item_image`, `item_cat` , `item_res`)
+        VALUES (? , ?  , ? ,  ? , ? ,  ? , ?)" ;
 
 $stmt = $con->prepare($sql) ;
-$stmt->execute(array($itemname , $itemsize , $itemprice ,   $imagename , $itemcat , $itemres));
+$stmt->execute(array($itemname , $itemnameen , $itemsize , $itemprice ,   $imagename , $itemcat , $itemres));
 
 $count = $stmt->rowCount() ;
 

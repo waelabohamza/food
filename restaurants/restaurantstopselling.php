@@ -14,6 +14,7 @@
       echo json_encode(array( 0 => "faild")) ;
     }
 
-
+    // SELECT COUNT(orders_details.details_item) FROM orders_details
 
 ?>
+
