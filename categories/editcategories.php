@@ -25,7 +25,7 @@ if (isset($_FILES['file'])) {
      	                    SET `cat_name`= ? ,`cat_photo`= ? , `cat_name_en` =? 
      	                    WHERE `cat_id` = ?
      	                    ") ;
-     $stmt->execute(array($catname , $imagename , $catid , $catname_en)) ;
+     $stmt->execute(array($catname , $imagename   , $catname_en, $catid  )) ;
      $count = $stmt->rowCount() ;
      if ($count > 0 ) {
      	   if (file_exists("../upload/categories/" . $imageold )){
@@ -38,10 +38,11 @@ if (isset($_FILES['file'])) {
      }
 }else {
 	  $stmt = $con->prepare("UPDATE `categories`
-     	                    SET `cat_name`= ?
+     	                    SET `cat_name`= ? , 
+							 `cat_name_en` =? 
      	                    WHERE `cat_id` = ?
      	                    ") ;
-     $stmt->execute(array($catname  , $catid)) ;
+     $stmt->execute(array($catname , $catname_en  , $catid)) ;
 
      $count = $stmt->rowCount() ;
 
