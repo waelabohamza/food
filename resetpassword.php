@@ -25,10 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
          $mail = new PHPMailer(true);
          $mail->SMTPDebug = 0;                      // Enable verbose debug output
          $mail->isSMTP();                                            // Send using SMTP
-         $mail->Host       = 'mail.talabpay.com';                    // Set the SMTP server to send through
+         $mail->Host       = 'mail.almotorkw.com';                    // Set the SMTP server to send through
          $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-         $mail->Username   = 'resetpassword@talabpay.com';                     // SMTP username
-         $mail->Password   = 'WonJd1ZeR{!i';                               // SMTP password
+         $mail->Username   = 'shady@almotorkw.com';                     // SMTP username
+         $mail->Password   = '2afIM^L)+,*C';                               // SMTP password
          $mail->SMTPSecure = "tls";         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
          $mail->Port       = 587;
          $mail->CharSet = 'UTF-8';
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
          )
          );
            $mail->addAddress($email);
-           $mail->setFrom('resetpassword@talabpay.com', 'talabpay');
+           $mail->setFrom('shady@almotorkw.com', 'wael');
            $mail->isHTML(true);                                  // Set email format to HTML
            $mail->Subject =   "اعادة تعيين كلمة المرور";
            $mail->Body    =   "رمز التحقق <strong>"  .  $code . "</strong>" ;

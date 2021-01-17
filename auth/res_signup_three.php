@@ -2,7 +2,7 @@
 
 include "../connect.php" ;
 if ($_SERVER['REQUEST_METHOD'] == "POST"){
-
+  $resnameen      = $_POST['name_en'] ; 
   $country        = $_POST['country'];
   $area           = $_POST['area'];
   $street         = $_POST['street'];
@@ -18,9 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
 
   $resemail          = $_POST['resemail'] ;
 
-  $stmt = $con->prepare("UPDATE `restaurants` SET `res_country` = ? , `res_area` = ? , `res_street` = ? , `res_time_delivery` = ?  , `res_price_delivery` = ? , `res_description` = ? , `res_type` = ?   WHERE `res_email` = ? ") ;
+  $stmt = $con->prepare("UPDATE `restaurants` SET  res_name_en = ?  , `res_country` = ? , `res_area` = ? , `res_street` = ? , `res_time_delivery` = ?  , `res_price_delivery` = ? , `res_description` = ? , `res_type` = ?   WHERE `res_email` = ? ") ;
 
-  $stmt->execute(array($country , $area ,  $street ,  $timedelivery , $pricedelivery   , $description  , $type ,   $resemail));
+  $stmt->execute(array( $resnameen  , $country  , $area ,  $street ,  $timedelivery , $pricedelivery   , $description  , $type ,   $resemail));
 
   $count = $stmt->rowCount() ;
 
