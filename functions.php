@@ -203,6 +203,54 @@ function addMoneyById($table, $column,  $price, $table_id, $id)
 }
 
 
+
+function insertData($table, $data)
+{
+    global $con;
+    foreach ($data as $field => $v)
+        $ins[] = ':' . $field;
+    $ins = implode(',', $ins);
+    $fields = implode(',', array_keys($data));
+    $sql = "INSERT INTO $table ($fields) VALUES ($ins)";
+
+    $stmt = $con->prepare($sql);
+    foreach ($data as $f => $v) {
+        $stmt->bindValue(':' . $f, $v);
+    }
+    $stmt->execute();
+    $count = $stmt->rowCount();
+    return $count;
+}
+
+
+function updateData($table, $data, $where)
+{
+    global $con;
+    $cols = array();
+    $vals = array();
+
+    foreach ($data as $key => $val) {
+        $vals[] = "$val";
+        $cols[] = "`$key` =  ? ";
+    }
+    $sql = "UPDATE $table SET " . implode(', ', $cols) . " WHERE $where";
+
+    $stmt = $con->prepare($sql);
+    $stmt->execute($vals);
+    $count = $stmt->rowCount();
+    return $count;
+}
+
+function deleteData($table, $col, $value)
+{
+    global $con;
+    $stmt = $con->prepare("DELETE FROM $table WHERE $col  = ? ");
+    $stmt->execute(array($value));
+    $count = $stmt->rowCount();
+    return $count;
+}
+
+
 // ====================================================================================
 //    INSERT TOKEN AND DELETE TOKEN FOR  TAXI AND USER AND RESTUARANTS
 //=====================================================================================
