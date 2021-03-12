@@ -9,11 +9,17 @@ $count = $stmt->rowCount();
 
 if ($count > 0) {
 
-    $imagetaxiold =  $row['imagehome_taxi'];
-    $imagefoodold =  $row['imagehome_food'];
-    $imagepayold  =  $row['imagehome_talabpay'];
+    $imagetaxiold                =  $row['imagehome_taxi'];
+    $imagefoodold                =  $row['imagehome_food'];
+    $imagepayold                 =  $row['imagehome_talabpay'];
+    $imagesendmonyqrcodeold      =  $row['imageshome_sq'];
+    $imagerecivemoneyqrocdeold   =  $row['imageshome_rq'];
+    $imagepayold                 =  $row['imageshome_sp'];
+    $imagepayold                 =  $row['imageshome_sa'];
+    $imagepayold                 =  $row['imageshome_charge'];
 
-    
+
+
 
     $imagetaxi = $_FILES['taxi']['name']  ?? $imagetaxiold;
     $imagefood = $_FILES['food']['name']  ??  $imagefoodold;
