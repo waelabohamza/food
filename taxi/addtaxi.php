@@ -1,7 +1,6 @@
 <?php
 
 include "../connect.php";
-
 if ($_SERVER['REQUEST_METHOD'] == "POST"){
   $taxiemail    = $_POST['email']       ;
   $id  = getIdByThing("taxi_id" , "taxi" , "taxi_email" , $taxiemail);   //get User Taxi
@@ -46,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
         if ($row > 0) {
           // echo "success" ;
 
-            getTokenAllAdmin("تم انضمام سائق جديد وهو الان بحاجة الى الموافقة" , "id"  , "taxiwait") ;  
+        
 
     	      move_uploaded_file($_FILES["file"]["tmp_name"], "../upload/taxiimage/". $imagenamecar );
         	  move_uploaded_file($_FILES["filetwo"]["tmp_name"], "../upload/taxilicence/". $imagenamelicence );
@@ -59,4 +58,3 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
 
   // End Check
 }
-?>

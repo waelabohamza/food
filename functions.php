@@ -34,20 +34,7 @@ function getTokenByPhone($phone)
   return $value;
 }
 
-function getTokenAllAdmin($message, $key, $value)
-{
-
-  global $con;
-  $stmt = $con->prepare("SELECT `user_token`  , `role` FROM `users` WHERE  `role` =  1  ");
-  $stmt->execute();
-  $admins = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  foreach ($admins as $admin) {
-    $token = $admin['user_token'];
-    $title = "TalabGoAdmin";
-    sendGCM($title, $message,  $token, $key, $value);
-    //
-  }
-}
+ 
 
 function getThing($table, $where, $value, $and = NULL)
 {
