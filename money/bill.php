@@ -1,7 +1,9 @@
 <?php
 
 include "../connect.php";
+
 $userid = 9;
+
 $datebetween = $_POST['datebetween'];
 
 if (isset($_POST['datebetween'])  &&  $datebetween == "day") {
@@ -47,9 +49,12 @@ if (isset($_POST['datebetween'])  &&  $datebetween == "day") {
 }
 
 
-$stmt = $con->prepare("SELECT *FROM `bill` WHERE bill_user  =  ? $and  ORDER BY bill_id DESC ");
+$stmt = $con->prepare("SELECT * FROM `bill` WHERE bill_user  =  ? And  bill_cat = 0 $and  ORDER BY bill_id DESC ");
+
 $stmt->execute(array($userid));
+
 $bill = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 $count = $stmt->rowCount();
 
 if ($count > 0) {

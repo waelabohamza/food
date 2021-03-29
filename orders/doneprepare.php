@@ -10,9 +10,6 @@ if ($typeprepare == "tableqrcode") {
 } else {
   $typeprepare = 3;
 }
-
-
-
 $stmt = $con->prepare(" UPDATE orders SET orders_status = ? WHERE orders_id = ? ");
 $stmt->execute(array($typeprepare, $orderid));
 $count = $stmt->rowCount();

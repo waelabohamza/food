@@ -8,7 +8,7 @@ $count = $stmt->rowCount();
 
 
 if ($count > 0) {
-     
+
     $imagetaxiold                =  $row['imagehome_taxi'];
     $imagefoodold                =  $row['imagehome_food'];
     $imagepayold                 =  $row['imagehome_talabpay'];
@@ -17,15 +17,104 @@ if ($count > 0) {
     $imagesendmoneyphoneold      =  $row['imageshome_sp'];
     $imagestateaccountold        =  $row['imageshome_sa'];
     $imagemoneychargeold         =  $row['imageshome_charge'];
+
     // File Request
-    $imagetaxi   = $_FILES['taxi']['name']   ?? $imagetaxiold;
-    $imagefood   = $_FILES['food']['name']   ?? $imagefoodold;
-    $imagepay    = $_FILES['pay']['name']    ?? $imagepayold;
-    $imagesq     = $_FILES['sq']['name']     ?? $imagesendmonyqrcodeold;
-    $imagerq     = $_FILES['rq']['name']     ?? $imagerecivemoneyqrcodeold;
-    $imagesp     = $_FILES['sp']['name']     ?? $imagesendmoneyphoneold;
-    $imagesa     = $_FILES['sa']['name']     ?? $imagestateaccountold;
-    $imagecharge = $_FILES['charge']['name'] ?? $imagemoneychargeold;
+
+    $rand1 = rand(100000, 9999999);
+    $rand2 = rand(100000, 9999999);
+    $rand3 = rand(100000, 9999999);
+    $rand4 = rand(100000, 9999999);
+    $rand5 = rand(100000, 9999999);
+    $rand6 = rand(100000, 9999999);
+    $rand7 = rand(100000, 9999999);
+    $rand8 = rand(100000, 9999999);
+    $rand9 = rand(100000, 9999999);
+
+
+    //    One 
+    if (isset($_FILES['taxi']['name'])) {
+        $imagetaxi = $rand1 . $_FILES['taxi']['name'];
+    } else {
+        $imagetaxi = $imagetaxiold;
+    }
+
+    // Two 
+
+    if (isset($_FILES['food']['name'])) {
+        $imagefood  = $rand2 . $_FILES['food']['name'];
+    } else {
+        $imagefood = $imagefoodold;
+    }
+
+    // Three 
+
+    if (isset($_FILES['pay']['name'])) {
+        $imagepay  = $rand3 . $_FILES['pay']['name'];
+    } else {
+        $imagepay = $imagepayold;
+    }
+
+
+    // Four 
+
+
+    if (isset($_FILES['sq']['name'])) {
+        $imagesq  = $rand4 . $_FILES['sq']['name'];
+    } else {
+        $imagesq = $imagesendmonyqrcodeold;
+    }
+
+    // Five 
+
+
+
+    if (isset($_FILES['rq']['name'])) {
+        $imagerq  = $rand5 . $_FILES['rq']['name'];
+    } else {
+        $imagerq = $imagerecivemoneyqrcodeold;
+    }
+
+    // Six 
+
+
+    if (isset($_FILES['sp']['name'])) {
+        $imagesp  = $rand6 . $_FILES['sp']['name'];
+    } else {
+        $imagesp = $imagesendmoneyphoneold;
+    }
+
+
+    // Seven
+
+
+    if (isset($_FILES['sa']['name'])) {
+        $imagesa  = $rand7 . $_FILES['sa']['name'];
+    } else {
+        $imagesa = $imagestateaccountold;
+    }
+
+    // eight
+
+
+    if (isset($_FILES['charge']['name'])) {
+        $imagecharge  = $rand8 . $_FILES['charge']['name'];
+    } else {
+        $imagecharge = $imagemoneychargeold;
+    }
+
+
+
+
+
+    // $imagefood   = $_FILES['food']['name']   ?? $imagefoodold;
+    // $imagepay    = $_FILES['pay']['name']    ?? $imagepayold;
+    // $imagesq     = $_FILES['sq']['name']     ?? $imagesendmonyqrcodeold;
+    // $imagerq     = $_FILES['rq']['name']     ?? $imagerecivemoneyqrcodeold;
+    // $imagesp     = $_FILES['sp']['name']     ?? $imagesendmoneyphoneold;
+    // $imagesa     = $_FILES['sa']['name']     ?? $imagestateaccountold;
+    // $imagecharge = $_FILES['charge']['name'] ?? $imagemoneychargeold;
+
+
     $data = array(
         "imagehome_taxi"     =>  $imagetaxi,
         "imagehome_food"     =>  $imagefood,
@@ -41,56 +130,58 @@ if ($count > 0) {
     if ($count > 0) {
         if (isset($_FILES['taxi']['name'])) {
             $file = $_FILES["taxi"];
-            $filename =    $file['name'];
-            unlink("../upload/home/" . $imagetaxiold);
+            $filename =     $rand1 .    $file['name'];
+            if (file_exists("../upload/home/" . $imagetaxiold)) {
+                unlink("../upload/home/" . $imagetaxiold);
+            }
             move_uploaded_file($file["tmp_name"], "../upload/home/" .     $filename);
         }
 
         if (isset($_FILES['food']['name'])) {
             $file = $_FILES["food"];
-            $filename =   $file['name'];
+            $filename =  $rand2 . $file['name'];
             unlink("../upload/home/" . $imagefoodold);
             move_uploaded_file($file["tmp_name"], "../upload/home/" .     $filename);
         }
 
         if (isset($_FILES['pay']['name'])) {
             $file = $_FILES["pay"];
-            $filename =    $file['name'];
+            $filename =   $rand3 . $file['name'];
             unlink("../upload/home/" . $imagepayold);
             move_uploaded_file($file["tmp_name"], "../upload/home/" . $filename);
         }
 
         if (isset($_FILES['sq']['name'])) {
             $file = $_FILES["sq"];
-            $filename =    $file['name'];
+            $filename = $rand4 .   $file['name'];
             unlink("../upload/home/" . $imagesendmonyqrcodeold);
             move_uploaded_file($file["tmp_name"], "../upload/home/" . $filename);
         }
 
         if (isset($_FILES['rq']['name'])) {
             $file = $_FILES["rq"];
-            $filename =    $file['name'];
+            $filename = $rand5 .   $file['name'];
             unlink("../upload/home/" . $imagerecivemoneyqrcodeold);
             move_uploaded_file($file["tmp_name"], "../upload/home/" . $filename);
         }
 
         if (isset($_FILES['sp']['name'])) {
             $file = $_FILES["sp"];
-            $filename =    $file['name'];
+            $filename =  $rand6 .  $file['name'];
             unlink("../upload/home/" . $imagesendmoneyphoneold);
             move_uploaded_file($file["tmp_name"], "../upload/home/" . $filename);
         }
 
         if (isset($_FILES['sa']['name'])) {
             $file = $_FILES["sa"];
-            $filename =    $file['name'];
+            $filename =  $rand7 .  $file['name'];
             unlink("../upload/home/" . $imagestateaccountold);
             move_uploaded_file($file["tmp_name"], "../upload/home/" . $filename);
         }
 
         if (isset($_FILES['charge']['name'])) {
             $file = $_FILES["charge"];
-            $filename =    $file['name'];
+            $filename = $rand8 .   $file['name'];
             unlink("../upload/home/" . $imagemoneychargeold);
             move_uploaded_file($file["tmp_name"], "../upload/home/" . $filename);
         }

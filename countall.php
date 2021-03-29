@@ -1,4 +1,5 @@
 <?php 
+//  header('Access-Control-Allow-Origin: *');
  include "connect.php" ; 
 
  $sql = " SELECT 

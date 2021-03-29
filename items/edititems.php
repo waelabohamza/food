@@ -31,6 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		$itemprice = $_POST['item_price'];
 
 		$itemcheck = getThing("items", "item_id", $itemid);
+
+		
 		$imageold = $itemcheck['item_image'];
 
 
