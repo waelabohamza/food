@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 		$itemcheck = getThing("items", "item_id", $itemid);
 
-		
+
 		$imageold = $itemcheck['item_image'];
 
 
