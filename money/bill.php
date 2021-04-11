@@ -2,7 +2,7 @@
 
 include "../connect.php";
 
-$userid = 9;
+$userid = $_POST['userid'];
 
 $datebetween = $_POST['datebetween'];
 
@@ -60,5 +60,5 @@ $count = $stmt->rowCount();
 if ($count > 0) {
     echo json_encode($bill);
 } else {
-    echo json_encode(array("status" => "faild"));
+    echo json_encode(array(0 => "faild"));
 }

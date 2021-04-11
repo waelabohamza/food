@@ -13,7 +13,7 @@ $countuser = $checkuser->rowCount() ;
 if ($countuser > 0) {
 
   $get = getTokenByPhone($phone);
-  $useridrecive = $get['userid'] ;
+  $useridrecive = $get['user_id'] ;
   $usernamerecive = $get['username'] ;
   $stmt = $con->prepare("UPDATE users SET  `user_balance` = $units  +  `user_balance`  WHERE `user_phone` = ? ") ;
   $stmt->execute(array($phone)) ;

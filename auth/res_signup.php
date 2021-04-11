@@ -1,5 +1,6 @@
 <?php
 include "../connect.php";
+
 if ($_SERVER['REQUEST_METHOD'] == "POST"){
 
   $username = filter_var($_POST['res_name'] , FILTER_SANITIZE_STRING) ;
@@ -30,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
       // echo "success" ;
       move_uploaded_file($_FILES["file"]["tmp_name"], "../upload/reslogo/". $imagenamelogo );
       move_uploaded_file($_FILES["filetwo"]["tmp_name"], "../upload/reslisence/". $imagenamelisence );
-
       echo json_encode(array('res_name' => $username ,'res_email' => $email ,'res_password' => $password , 'status' => "success"));
     }
   }

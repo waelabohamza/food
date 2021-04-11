@@ -18,23 +18,16 @@ function getTokenByPhone($phone)
 
   global $con;
 
-  $stmt = $con->prepare("SELECT  users.user_id , users.username , tokenusers.tokenusers_token  FROM  `users` INNER JOIN tokenusers ON tokenusers.tokenusers_user = users.user_id WHERE user_phone = ? ");
+  $stmt = $con->prepare("SELECT  users.user_id , users.username    FROM  `users`  WHERE user_phone = ? ");
 
   $stmt->execute(array($phone));
 
   $values  = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  $value = array();
-
-  $value['token'] = $values['tokenusers_token'];
-  $value['userid'] = $values['user_id'];
-  $value['username'] = $values['username'];
-
-
-  return $value;
+  return $values;
 }
 
- 
+
 
 function getThing($table, $where, $value, $and = NULL)
 {
@@ -193,48 +186,48 @@ function addMoneyById($table, $column,  $price, $table_id, $id)
 
 function insertData($table, $data)
 {
-    global $con;
-    foreach ($data as $field => $v)
-        $ins[] = ':' . $field;
-    $ins = implode(',', $ins);
-    $fields = implode(',', array_keys($data));
-    $sql = "INSERT INTO $table ($fields) VALUES ($ins)";
+  global $con;
+  foreach ($data as $field => $v)
+    $ins[] = ':' . $field;
+  $ins = implode(',', $ins);
+  $fields = implode(',', array_keys($data));
+  $sql = "INSERT INTO $table ($fields) VALUES ($ins)";
 
-    $stmt = $con->prepare($sql);
-    foreach ($data as $f => $v) {
-        $stmt->bindValue(':' . $f, $v);
-    }
-    $stmt->execute();
-    $count = $stmt->rowCount();
-    return $count;
+  $stmt = $con->prepare($sql);
+  foreach ($data as $f => $v) {
+    $stmt->bindValue(':' . $f, $v);
+  }
+  $stmt->execute();
+  $count = $stmt->rowCount();
+  return $count;
 }
 
 
 function updateData($table, $data, $where)
 {
-    global $con;
-    $cols = array();
-    $vals = array();
+  global $con;
+  $cols = array();
+  $vals = array();
 
-    foreach ($data as $key => $val) {
-        $vals[] = "$val";
-        $cols[] = "`$key` =  ? ";
-    }
-    $sql = "UPDATE $table SET " . implode(', ', $cols) . " WHERE $where";
+  foreach ($data as $key => $val) {
+    $vals[] = "$val";
+    $cols[] = "`$key` =  ? ";
+  }
+  $sql = "UPDATE $table SET " . implode(', ', $cols) . " WHERE $where";
 
-    $stmt = $con->prepare($sql);
-    $stmt->execute($vals);
-    $count = $stmt->rowCount();
-    return $count;
+  $stmt = $con->prepare($sql);
+  $stmt->execute($vals);
+  $count = $stmt->rowCount();
+  return $count;
 }
 
 function deleteData($table, $col, $value)
 {
-    global $con;
-    $stmt = $con->prepare("DELETE FROM $table WHERE $col  = ? ");
-    $stmt->execute(array($value));
-    $count = $stmt->rowCount();
-    return $count;
+  global $con;
+  $stmt = $con->prepare("DELETE FROM $table WHERE $col  = ? ");
+  $stmt->execute(array($value));
+  $count = $stmt->rowCount();
+  return $count;
 }
 
 
@@ -497,7 +490,7 @@ function bill($price, $userid, $type, $title, $body)
   global $now;
   $stmt = $con->prepare("INSERT INTO `bill`(`bill_price`, `bill_user`, `bill_type`, `bill_date`, `bill_title`, `bill_body` , `bill_cat`)
                          VALUES (? , ? , ? , ? , ? , ? , 0 )");
-  $stmt->execute(array($price, $userid, $type,  $now ,$title, $body));
+  $stmt->execute(array($price, $userid, $type,  $now, $title, $body));
   $count = $stmt->rowCount();
   return $count;
 }
@@ -508,7 +501,7 @@ function billRes($price, $userid, $type, $title, $body)
   global $now;
   $stmt = $con->prepare("INSERT INTO `bill`(`bill_price`, `bill_user`, `bill_type`, `bill_date`, `bill_title`, `bill_body` , `bill_cat`)
                          VALUES (? , ? , ? , ? , ? , ? , 1)");
-  $stmt->execute(array($price, $userid, $type,  $now ,$title, $body));
+  $stmt->execute(array($price, $userid, $type,  $now, $title, $body));
   $count = $stmt->rowCount();
   return $count;
 }
