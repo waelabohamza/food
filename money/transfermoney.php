@@ -10,7 +10,7 @@ $stmt->execute( array( $phone)) ;
 $count = $stmt->rowCount() ;
 if ($count > 0 ) {
 bill($units , $userid , "1" , " تحويل مالي" , " تم تحويل رصيد من  TalabPay") ; 
- echo json_encode(array("status" => "success" , "token" => $token))  ;
+ echo json_encode(array("status" => "success"))  ;
  $title = "TalabGoFoodDelivery" ;
  $message = " تم تحويل رصيد " . $units . " دينار من قبل TalabPay " ;
  sendNotifySpecificUser($userid  , $title , $message , "" , "")  ;

@@ -5,11 +5,9 @@ $phone =  filterSan($_POST['phone'] , "number") ;
 $units =  $_POST['units'] ;
 $userid = $_POST['userid'] ;
 $username = $_POST['username'] ;
-
 $checkuser = $con->prepare("SELECT * FROM users WHERE user_phone = ?  ") ;
 $checkuser->execute(array($phone)) ;
 $countuser = $checkuser->rowCount() ;
-
 if ($countuser > 0) {
 
   $get = getTokenByPhone($phone);
